@@ -52,7 +52,7 @@ public class Farion extends JavaPlugin implements Listener {
 
 	@EventHandler(ignoreCancelled = true)
 	public void onChat(PlayerChatEvent event) {
-		bot.sendMessage(Config.channel, "<" + event.getPlayer().getName() + ">: " + event.getMessage());
+		bot.sendMessage(Config.channel, "<" + event.getPlayer().getName() + "> " + event.getMessage());
 		// TODO: Mod Channel
 	}
 }

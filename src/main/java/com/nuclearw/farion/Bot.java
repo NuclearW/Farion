@@ -20,7 +20,7 @@ public class Bot extends PircBot {
 	@Override
 	protected void onMessage(String channel, String sender, String login, String hostname, String message) {
 		if (channel.equalsIgnoreCase(Config.channel)) {
-			plugin.getServer().broadcastMessage("[IRC] <" + sender + ">: " + Colors.removeFormattingAndColors(message));
+			plugin.getServer().broadcastMessage("[IRC] <" + sender + "> " + Colors.removeFormattingAndColors(message));
 		} else if (channel.equalsIgnoreCase(Config.modChannel)) {
 			// TODO: Mod Channel
 		}
