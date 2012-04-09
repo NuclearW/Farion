@@ -53,22 +53,26 @@ public class Farion extends JavaPlugin implements Listener {
 	public void onDisable() {
 		getLogger().info("Finished Unloading "+getDescription().getFullName());
 	}
+
 	//Chat Handler
 	@EventHandler(ignoreCancelled = true)
 	public void onChat(PlayerChatEvent event) {
 		bot.sendMessage(Config.channel, "<" + event.getPlayer().getName() + "> " + event.getMessage());
 		// TODO: Mod Channel
 	}
+
 	//Join Handler
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		bot.sendMessage(Config.channel, event.getPlayer().getName() + "  logged in.");
 	}
+
 	//Quit Handler
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onPlayerJoin(PlayerQuitEvent event) {
 		bot.sendMessage(Config.channel, event.getPlayer().getName() + "  left the server.");
 	}
+
 	//Kick Handler
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onPlayerKick(PlayerKickEvent event) {
