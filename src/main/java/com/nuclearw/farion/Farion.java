@@ -5,8 +5,12 @@ import java.io.IOException;
 import javax.net.ssl.SSLException;
 
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jibble.pircbot.IrcException;
 import org.jibble.pircbot.NickAlreadyInUseException;
@@ -49,10 +53,25 @@ public class Farion extends JavaPlugin implements Listener {
 	public void onDisable() {
 		getLogger().info("Finished Unloading "+getDescription().getFullName());
 	}
-
+	//Chat Handler
 	@EventHandler(ignoreCancelled = true)
 	public void onChat(PlayerChatEvent event) {
 		bot.sendMessage(Config.channel, "<" + event.getPlayer().getName() + ">: " + event.getMessage());
 		// TODO: Mod Channel
+	}
+	//Join Handler
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+	public void onPlayerJoin(PlayerJoinEvent event) {
+		bot.sendMessage(Config.channel, event.getPlayer().getName() + "  logged in.");
+	}
+	//Quit Handler
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+	public void onPlayerJoin(PlayerQuitEvent event) {
+		bot.sendMessage(Config.channel, event.getPlayer().getName() + "  left the server.");
+	}
+	//Kick Handler
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+	public void onPlayerKick(PlayerKickEvent event) {
+		bot.sendMessage(Config.channel, event.getPlayer().getName() + " was kicked." + event.getReason());
 	}
 }
