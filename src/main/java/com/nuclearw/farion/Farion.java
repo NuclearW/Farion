@@ -40,6 +40,8 @@ public class Farion extends JavaPlugin implements Listener {
 			e.printStackTrace();
 		}
 
+		getServer().getPluginManager().registerEvents(this, this);
+
 		getLogger().info("Finished Loading " + getDescription().getFullName());
 	}
 
