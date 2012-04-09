@@ -24,6 +24,28 @@ public class Farion extends JavaPlugin implements Listener {
 		Config.load(this);
 
 		bot = new Bot(this);
+
+		connect();
+
+		getServer().getPluginManager().registerEvents(this, this);
+
+		getLogger().info("Finished Loading " + getDescription().getFullName());
+	}
+
+	@Override
+	public void onDisable() {
+		getLogger().info("Finished Unloading "+getDescription().getFullName());
+	}
+
+	//Chat Handler
+	@EventHandler(ignoreCancelled = true)
+	public void onChat(PlayerChatEvent event) {
+		bot.sendMessage(Config.channel, "<" + event.getPlayer().getName() + "> " + event.getMessage());
+		// TODO: Mod Channel
+	}
+
+	//Connect to the IRC server
+	public static void connect() {
 		try {
 			if(Config.ssl) {
 				bot.connect(Config.hostname, Config.port, new TrustingSSLSocketFactory());
@@ -43,22 +65,6 @@ public class Farion extends JavaPlugin implements Listener {
 		} catch (IrcException e) {
 			e.printStackTrace();
 		}
-
-		getServer().getPluginManager().registerEvents(this, this);
-
-		getLogger().info("Finished Loading " + getDescription().getFullName());
-	}
-
-	@Override
-	public void onDisable() {
-		getLogger().info("Finished Unloading "+getDescription().getFullName());
-	}
-
-	//Chat Handler
-	@EventHandler(ignoreCancelled = true)
-	public void onChat(PlayerChatEvent event) {
-		bot.sendMessage(Config.channel, "<" + event.getPlayer().getName() + "> " + event.getMessage());
-		// TODO: Mod Channel
 	}
 
 	//Join Handler
