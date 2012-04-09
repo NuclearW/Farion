@@ -62,16 +62,24 @@ public class Farion extends JavaPlugin implements Listener {
 	//Join Handler
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		bot.sendMessage(Config.channel, event.getPlayer().getName() + "  logged in.");
+		bot.sendMessage(Config.channel, event.getPlayer().getName() + " logged in.");
 	}
 	//Quit Handler
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onPlayerJoin(PlayerQuitEvent event) {
-		bot.sendMessage(Config.channel, event.getPlayer().getName() + "  left the server.");
+		bot.sendMessage(Config.channel, event.getPlayer().getName() + " left the server.");
 	}
 	//Kick Handler
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onPlayerKick(PlayerKickEvent event) {
-		bot.sendMessage(Config.channel, event.getPlayer().getName() + " was kicked." + event.getReason());
+		String strKickreason;
+		
+		//Check if there's an actual kick reason passed, and if there is, include it in the output
+		strKickreason = event.getReason();
+		     if (strKickreason != null) {
+		         bot.sendMessage(Config.channel, event.getPlayer().getName() + " was kicked: [" + strKickreason + "]"); }
+		     else { 
+		    	 bot.sendMessage(Config.channel, event.getPlayer().getName() + " was kicked.");
+		     }
+		}
 	}
-}

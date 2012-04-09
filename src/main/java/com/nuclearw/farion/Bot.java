@@ -17,6 +17,8 @@ public class Bot extends PircBot {
 	protected void onConnect() {
 		identify(Config.nickServPassword);
 	}
+	
+    //TODO: Cycle connection attempts if disconnected
 
 	@Override
 	protected void onMessage(String channel, String sender, String login, String hostname, String message) {
@@ -42,4 +44,5 @@ public class Bot extends PircBot {
 			// TODO: Mod Channel
 		}
 	}
+	
 }
