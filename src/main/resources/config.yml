@@ -1,0 +1,12 @@
+# Farion config file
+Bot:
+    Nick: SL_Chatbot
+    NickServ: woowoo
+Server:
+    Hostname: irc.esper.net
+    Port: 6697
+    SSL: true
+Channel:
+    Name: #channel
+ModChannel:
+    Name: #channel
