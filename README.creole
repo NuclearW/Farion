@@ -1,0 +1,8 @@
+== Farion
+
+Farion is yet another IRC - Minecraft connection plugin designed specifically around the requirements of its authors
+
+=== Compiling
+
+Maven 3 is required to compile Farion
+pircbot-ssl is also required

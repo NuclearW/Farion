@@ -1,0 +1,5 @@
+name: Farion
+main: com.nuclearw.farion.Farion
+version: ${project.version}
+authors: [NuclearW, Shatteredbeam]
+description: Farion is yet another IRC - Minecraft connection plugin designed specifically around the requirements of its authors
