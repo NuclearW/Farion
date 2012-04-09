@@ -40,6 +40,7 @@ public class Bot extends PircBot {
 			}
 
 			plugin.getServer().broadcastMessage("[IRC] <" + sender + "> " + message);
+			plugin.getLogger().info("[IRC][" + Config.channel + "] <" + sender + "> " + message);
 		} else if (channel.equalsIgnoreCase(Config.modChannel)) {
 			// TODO: Mod Channel
 		}
