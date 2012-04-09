@@ -80,10 +80,10 @@ public class Farion extends JavaPlugin implements Listener {
 		
 		//Check if there's an actual kick reason passed, and if there is, include it in the output
 		strKickreason = event.getReason();
-		     if (strKickreason != null) {
-		         bot.sendMessage(Config.channel, event.getPlayer().getName() + " was kicked: [" + strKickreason + "]"); }
-		     else { 
-		    	 bot.sendMessage(Config.channel, event.getPlayer().getName() + " was kicked.");
-		     }
+		if(strKickreason != null) {
+			bot.sendMessage(Config.channel, event.getPlayer().getName() + " was kicked: [" + strKickreason + "]");
+		} else {
+			bot.sendMessage(Config.channel, event.getPlayer().getName() + " was kicked.");
 		}
 	}
+}
