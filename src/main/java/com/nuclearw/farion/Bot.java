@@ -15,11 +15,32 @@ public class Bot extends PircBot {
 
 	@Override
 	protected void onConnect() {
+		plugin.getLogger().info("[Farion] Connected to IRC");
+		plugin.getLogger().info("[Farion] " + Config.hostname + ", port " + Config.port);
 		identify(Config.nickServPassword);
 	}
 	
     //TODO: Cycle connection attempts if disconnected
-
+    @Override
+    protected void onDisconnect() {
+    	plugin.getLogger().info("[Farion] Disconnected from IRC.");
+    	
+    	//Set a delayed task to attempt a rejoin
+             if (Config.retryConnect = true) {
+            	 
+            	 plugin.getLogger().info("[Farion] Retrying connect in 10 seconds...");
+            	 
+            	 //Schedule the actual task
+    	         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+    	             public void run() {
+    	             Farion.connect();
+    	             }
+    	         }, 200L);
+    	         //If retryConnect is false, don't even bother.
+              } else { plugin.getLogger().info("[Farion] RetryConnect is off: No additional connection attempts."); 
+               }
+        }
+    
 	@Override
 	protected void onMessage(String channel, String sender, String login, String hostname, String message) {
 		if (channel.equalsIgnoreCase(Config.channel)) {

@@ -2,6 +2,7 @@
 Bot:
     Nick: SL_Chatbot
     NickServ: woowoo
+    RetryConnect: true
 Server:
     Hostname: irc.esper.net
     Port: 6697
