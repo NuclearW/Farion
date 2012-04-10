@@ -43,7 +43,7 @@ public class Bot extends PircBot {
 
 	@Override
 	protected void onMessage(String channel, String sender, String login, String hostname, String message) {
-		if (channel.equalsIgnoreCase(Config.channel)) {
+		if(channel.equalsIgnoreCase(Config.channel)) {
 			message = Colors.removeFormattingAndColors(message);
 
 			if(message.equalsIgnoreCase(".players")) {
@@ -62,8 +62,18 @@ public class Bot extends PircBot {
 
 			plugin.getServer().broadcastMessage("[IRC] <" + sender + "> " + message);
 			plugin.getLogger().info("[IRC][" + Config.channel + "] <" + sender + "> " + message);
-		} else if (channel.equalsIgnoreCase(Config.modChannel)) {
+		} else if(channel.equalsIgnoreCase(Config.modChannel)) {
 			// TODO: Mod Channel
+		}
+	}
+
+	@Override
+	protected void onAction(String sender, String login, String hostname, String target, String action) {
+		if(target.equalsIgnoreCase(Config.channel)) {
+			plugin.getServer().broadcastMessage("[IRC] * " + sender + " " + action);
+			plugin.getLogger().info("[IRC] * " + sender + " " + action);
+		} else if(target.equalsIgnoreCase(Config.modChannel)) {
+			// TODO: Mod channel
 		}
 	}
 }

@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -41,7 +42,24 @@ public class Farion extends JavaPlugin implements Listener {
 	@EventHandler(ignoreCancelled = true)
 	public void onChat(PlayerChatEvent event) {
 		bot.sendMessage(Config.channel, "<" + event.getPlayer().getName() + "> " + event.getMessage());
-		// TODO: Mod Channel
+		// TODO: Mod Channel ?
+	}
+
+	///me handler
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+	public void onCommandPreprocess(PlayerCommandPreprocessEvent event) {
+		if(event.getMessage().startsWith("/me")) {
+			String[] words = event.getMessage().split(" ");
+			if(words.length < 2) return;
+
+			String message = words[1];
+			for(int i = 2; i < words.length; i++) {
+				message += " " + words[i];
+			}
+
+			bot.sendMessage(Config.channel, "* " + event.getPlayer().getName() + " " + message);
+			// TODO: Mod Channel ?
+		}
 	}
 
 	//Connect to the IRC server
