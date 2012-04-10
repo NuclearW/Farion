@@ -15,18 +15,18 @@ public class Bot extends PircBot {
 
 	@Override
 	protected void onConnect() {
-		plugin.getLogger().info("[Farion] Connected to IRC");
-		plugin.getLogger().info("[Farion] " + Config.hostname + ", port " + Config.port);
+		plugin.getLogger().info("Connected to IRC");
+		plugin.getLogger().info(Config.hostname + ", port " + Config.port);
 		identify(Config.nickServPassword);
 	}
 
 	@Override
 	protected void onDisconnect() {
-		plugin.getLogger().info("[Farion] Disconnected from IRC.");
+		plugin.getLogger().info("Disconnected from IRC.");
 
 		//Set a delayed task to attempt a rejoin
 		if(Config.retryConnect = true) {
-			plugin.getLogger().info("[Farion] Retrying connect in 10 seconds...");
+			plugin.getLogger().info("Retrying connect in 10 seconds...");
 
 			//Schedule the actual task
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -37,7 +37,7 @@ public class Bot extends PircBot {
 
 		//If retryConnect is false, don't even bother.
 		} else {
-			plugin.getLogger().info("[Farion] RetryConnect is off: No additional connection attempts."); 
+			plugin.getLogger().info("RetryConnect is off: No additional connection attempts."); 
 		}
 	}
 

@@ -29,12 +29,12 @@ public class Farion extends JavaPlugin implements Listener {
 
 		getServer().getPluginManager().registerEvents(this, this);
 
-		getLogger().info("[Farion] Loading... " + getDescription().getFullName());
+		getLogger().info("Finished Loading " + getDescription().getFullName());
 	}
 
 	@Override
 	public void onDisable() {
-		getLogger().info("[Farion] Unloading... "+getDescription().getFullName());
+		getLogger().info("Finished Unloading " + getDescription().getFullName());
 	}
 
 	//Chat Handler
