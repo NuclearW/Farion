@@ -5,4 +5,5 @@ Farion is yet another IRC - Minecraft connection plugin designed specifically ar
 === Compiling
 
 Maven 3 is required to compile Farion
+
 pircbot-ssl is also required
