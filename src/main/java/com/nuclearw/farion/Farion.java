@@ -1,6 +1,7 @@
 package com.nuclearw.farion;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.net.ssl.SSLException;
@@ -21,7 +22,7 @@ import org.jibble.pircbot.TrustingSSLSocketFactory;
 
 public class Farion extends JavaPlugin implements Listener {
 	private static Bot bot;
-	protected static Map<String, FarionRemoteConsoleCommandSender> remoteSenders;
+	protected static Map<String, FarionRemoteConsoleCommandSender> remoteSenders = new HashMap<String, FarionRemoteConsoleCommandSender>();
 
 	@Override
 	public void onEnable() {
