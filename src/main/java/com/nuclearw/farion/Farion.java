@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jibble.pircbot.IrcException;
 import org.jibble.pircbot.NickAlreadyInUseException;
@@ -108,6 +109,23 @@ public class Farion extends JavaPlugin implements Listener {
 			bot.sendMessage(Config.channel, event.getPlayer().getName() + " was kicked: [" + strKickreason + "]");
 		} else {
 			bot.sendMessage(Config.channel, event.getPlayer().getName() + " was kicked.");
+		}
+	}
+
+	//Server chatter handler
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+	public void onServerCommand(ServerCommandEvent event) {
+		if(event.getCommand().toLowerCase().startsWith("say")) {
+			String[] words = event.getCommand().split(" ");
+			if(words.length < 2) return;
+
+			String message = words[1];
+			for(int i = 2; i < words.length; i++) {
+				message += " " + words[i];
+			}
+
+			bot.sendMessage(Config.channel, "<*Console*> " + message);
+			// TODO: Mod Channel ?
 		}
 	}
 }
