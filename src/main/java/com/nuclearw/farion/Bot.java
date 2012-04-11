@@ -69,8 +69,13 @@ public class Bot extends PircBot {
 //			plugin.getLogger().info("[IRC][" + Config.channel + "] <" + sender + "> " + message);
 		} else if(channel.equalsIgnoreCase(Config.modChannel)) {
 			// TODO: Mod Channel
-		} else if(Farion.remoteSenders.containsKey(channel)) {
-			FarionRemoteServerCommandEvent event = new FarionRemoteServerCommandEvent(Farion.remoteSenders.get(channel), message);
+		}
+	}
+
+	@Override
+	protected void onPrivateMessage(String sender, String login, String hostname, String message) {
+		if(Farion.remoteSenders.containsKey(sender)) {
+			FarionRemoteServerCommandEvent event = new FarionRemoteServerCommandEvent(Farion.remoteSenders.get(sender), message);
 			Bukkit.getServer().getPluginManager().callEvent(event);
 		}
 	}
