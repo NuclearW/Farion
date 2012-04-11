@@ -1,6 +1,6 @@
 # Farion config file
 Bot:
-    Nick: SL_Chatbot
+    Nick: Chatbot
     NickServ: woowoo
     RetryConnect: true
 Server:
