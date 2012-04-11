@@ -61,7 +61,7 @@ public class Bot extends PircBot {
 			}
 
 			plugin.getServer().broadcastMessage("[IRC] <" + sender + "> " + message);
-			plugin.getLogger().info("[IRC][" + Config.channel + "] <" + sender + "> " + message);
+//			plugin.getLogger().info("[IRC][" + Config.channel + "] <" + sender + "> " + message);
 		} else if(channel.equalsIgnoreCase(Config.modChannel)) {
 			// TODO: Mod Channel
 		}
@@ -71,7 +71,7 @@ public class Bot extends PircBot {
 	protected void onAction(String sender, String login, String hostname, String target, String action) {
 		if(target.equalsIgnoreCase(Config.channel)) {
 			plugin.getServer().broadcastMessage("[IRC] * " + sender + " " + action);
-			plugin.getLogger().info("[IRC] * " + sender + " " + action);
+//			plugin.getLogger().info("[IRC] * " + sender + " " + action);
 		} else if(target.equalsIgnoreCase(Config.modChannel)) {
 			// TODO: Mod channel
 		}
