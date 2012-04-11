@@ -5,6 +5,7 @@ import org.bukkit.craftbukkit.command.ServerCommandSender;
 
 public class FarionRemoteConsoleCommandSender extends ServerCommandSender implements RemoteConsoleCommandSender {
 	private String name = "Farion";
+	private boolean recieve = false;
 	private static Bot bot;
 
 	public FarionRemoteConsoleCommandSender(String name) {
@@ -18,7 +19,7 @@ public class FarionRemoteConsoleCommandSender extends ServerCommandSender implem
 
 	public void sendMessage(String message) {
 		try {
-			bot.sendMessage(name, message);
+			if(recieve) bot.sendMessage(name, message);
 		} catch(NullPointerException ex) {
 			System.out.println("[Farion] Attempted to send a message in response to a command but bot was null!");
 		}
@@ -40,5 +41,13 @@ public class FarionRemoteConsoleCommandSender extends ServerCommandSender implem
 
 	public static void setBot(Bot bot) {
 		FarionRemoteConsoleCommandSender.bot = bot;
+	}
+
+	public boolean doesRecieve() {
+		return recieve;
+	}
+
+	public void setRecieve(boolean set) {
+		recieve = set;
 	}
 }
