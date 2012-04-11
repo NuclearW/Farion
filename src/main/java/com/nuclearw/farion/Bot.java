@@ -77,6 +77,7 @@ public class Bot extends PircBot {
 		if(Farion.remoteSenders.containsKey(sender)) {
 			FarionRemoteServerCommandEvent event = new FarionRemoteServerCommandEvent(Farion.remoteSenders.get(sender), message);
 			Bukkit.getServer().getPluginManager().callEvent(event);
+			Bukkit.getServer().dispatchCommand(Farion.remoteSenders.get(sender), event.getCommand());
 		}
 	}
 
