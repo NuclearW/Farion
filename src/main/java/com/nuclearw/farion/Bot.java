@@ -1,8 +1,12 @@
 package com.nuclearw.farion;
 
 import org.bukkit.Bukkit;
+
+import java.io.IOException;
+
 import org.bukkit.entity.Player;
 import org.jibble.pircbot.Colors;
+import org.jibble.pircbot.DccChat;
 import org.jibble.pircbot.PircBot;
 
 public class Bot extends PircBot {
@@ -79,5 +83,30 @@ public class Bot extends PircBot {
 		} else if(target.equalsIgnoreCase(Config.modChannel)) {
 			// TODO: Mod channel
 		}
+	}
+
+	@Override
+	protected void onIncomingChatRequest(DccChat chat) {
+		try {
+			// TODO: Some Authentication Method here
+
+			chat.accept();
+			chat.sendLine("Enter password.");
+			String response = chat.readLine();
+
+			if(response.equals(Config.dccPassword)) {
+				chat.sendLine("Password Accepted");
+				plugin.getLogger().info("DCC Console session started.");
+
+				//Do some init function to start emulating console data
+
+				chat.close(); //Remove this when actually ready to use
+			} else {
+				plugin.getLogger().info("DCC Console session attempt, incorrect password.");
+				chat.sendLine("Incorrect.  Closing.");
+				chat.close();
+			}
+		}
+		catch (IOException e) {}
 	}
 }

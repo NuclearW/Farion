@@ -1,5 +1,6 @@
 # Farion config file
 Bot:
+    DCCPassword: changeme
     Nick: Chatbot
     NickServ: woowoo
     RetryConnect: true
