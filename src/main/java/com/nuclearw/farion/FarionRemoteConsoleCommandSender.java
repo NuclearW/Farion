@@ -1,0 +1,44 @@
+package com.nuclearw.farion;
+
+import org.bukkit.command.RemoteConsoleCommandSender;
+import org.bukkit.craftbukkit.command.ServerCommandSender;
+
+public class FarionRemoteConsoleCommandSender extends ServerCommandSender implements RemoteConsoleCommandSender {
+	private String name = "Farion";
+	private static Bot bot;
+
+	public FarionRemoteConsoleCommandSender(String name) {
+		super();
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void sendMessage(String message) {
+		try {
+			bot.sendMessage(name, message);
+		} catch(NullPointerException ex) {
+			System.out.println("[Farion] Attempted to send a message in response to a command but bot was null!");
+		}
+	}
+
+	public void sendMessage(String[] messages) {
+		for(String message : messages) {
+			sendMessage(message);
+		}
+	}
+
+	public boolean isOp() {
+		return true;
+	}
+
+	public void setOp(boolean arg0) {
+		throw new UnsupportedOperationException("Cannot change operator status of remote controller.");
+	}
+
+	public static void setBot(Bot bot) {
+		FarionRemoteConsoleCommandSender.bot = bot;
+	}
+}

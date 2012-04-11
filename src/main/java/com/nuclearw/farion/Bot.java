@@ -1,5 +1,6 @@
 package com.nuclearw.farion;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jibble.pircbot.Colors;
 import org.jibble.pircbot.PircBot;
@@ -64,6 +65,9 @@ public class Bot extends PircBot {
 //			plugin.getLogger().info("[IRC][" + Config.channel + "] <" + sender + "> " + message);
 		} else if(channel.equalsIgnoreCase(Config.modChannel)) {
 			// TODO: Mod Channel
+		} else if(Farion.remoteSenders.containsKey(channel)) {
+			FarionRemoteServerCommandEvent event = new FarionRemoteServerCommandEvent(Farion.remoteSenders.get(channel), message);
+			Bukkit.getServer().getPluginManager().callEvent(event);
 		}
 	}
 

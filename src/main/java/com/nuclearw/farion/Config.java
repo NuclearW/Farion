@@ -1,11 +1,13 @@
 package com.nuclearw.farion;
 
 import java.io.File;
+import java.util.List;
 
 public class Config {
 	public static String nick, nickServPassword, channel, modChannel, hostname;
 	public static int port;
 	public static boolean ssl, retryConnect;
+	public static List<String> remoteUsernames;
 
 	public static void load(Farion plugin) {
 		if(!new File(plugin.getDataFolder() , "config.yml").exists()) {
@@ -23,5 +25,7 @@ public class Config {
 		channel = plugin.getConfig().getString("Channel.Name");
 
 		modChannel = plugin.getConfig().getString("ModChannel.Name");
+
+		remoteUsernames = plugin.getConfig().getStringList("RemoteConsoleUsers");
 	}
 }

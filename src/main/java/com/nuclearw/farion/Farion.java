@@ -1,6 +1,7 @@
 package com.nuclearw.farion;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.net.ssl.SSLException;
 
@@ -20,12 +21,19 @@ import org.jibble.pircbot.TrustingSSLSocketFactory;
 
 public class Farion extends JavaPlugin implements Listener {
 	private static Bot bot;
+	protected static Map<String, FarionRemoteConsoleCommandSender> remoteSenders;
 
 	@Override
 	public void onEnable() {
 		Config.load(this);
 
 		bot = new Bot(this);
+
+		FarionRemoteConsoleCommandSender.setBot(bot);
+
+		for(String name : Config.remoteUsernames) {
+			remoteSenders.put(name, new FarionRemoteConsoleCommandSender(name));
+		}
 
 		connect();
 

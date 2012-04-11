@@ -11,3 +11,5 @@ Channel:
     Name: "#channel"
 ModChannel:
     Name: "#channel"
+RemoteConsoleUsers:
+    - "Username"
