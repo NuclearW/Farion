@@ -48,7 +48,7 @@ public class Farion extends JavaPlugin implements Listener {
 	///me handler
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onCommandPreprocess(PlayerCommandPreprocessEvent event) {
-		if(event.getMessage().startsWith("/me")) {
+		if(event.getMessage().toLowerCase().startsWith("/me")) {
 			String[] words = event.getMessage().split(" ");
 			if(words.length < 2) return;
 
