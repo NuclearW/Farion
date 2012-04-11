@@ -78,9 +78,11 @@ public class Bot extends PircBot {
 			if(message.equalsIgnoreCase(".on")) {
 				sendMessage(sender, "Console output is now enabled");
 				Farion.remoteSenders.get(sender).setRecieve(true);
+				return;
 			} else if(message.equalsIgnoreCase(".off")) {
 				sendMessage(sender, "Console output is now disabled");
 				Farion.remoteSenders.get(sender).setRecieve(false);
+				return;
 			}
 			FarionRemoteServerCommandEvent event = new FarionRemoteServerCommandEvent(Farion.remoteSenders.get(sender), message);
 			Bukkit.getServer().getPluginManager().callEvent(event);
