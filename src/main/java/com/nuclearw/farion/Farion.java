@@ -22,12 +22,18 @@ import org.jibble.pircbot.TrustingSSLSocketFactory;
 
 public class Farion extends JavaPlugin implements Listener {
 	private static Bot bot;
+	private FarionCommandExecutor farionExecutor;
 	protected static Map<String, FarionRemoteConsoleCommandSender> remoteSenders = new HashMap<String, FarionRemoteConsoleCommandSender>();
 
 	@Override
 	public void onEnable() {
+		
+		farionExecutor = new FarionCommandExecutor(this);
+		
+		//Nuke: Unused executor, I did NOT bind anything to it yet.  Don't forget to register commands.
+		
 		Config.load(this);
-
+		
 		bot = new Bot(this);
 
 		FarionRemoteConsoleCommandSender.setBot(bot);
