@@ -1,8 +1,8 @@
 # Farion config file
 Bot:
-    DCCPassword: changeme
-    Nick: Chatbot
-    NickServ: woowoo
+    DCCPassword: "changeme"
+    Nick: "Chatbot"
+    NickServ: "woowoo"
     RetryConnect: true
 Server:
     Hostname: irc.esper.net
