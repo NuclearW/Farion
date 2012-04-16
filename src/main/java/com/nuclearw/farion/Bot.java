@@ -75,18 +75,20 @@ public class Bot extends PircBot {
 	@Override
 	protected void onPrivateMessage(String sender, String login, String hostname, String message) {
 		if(Farion.remoteSenders.containsKey(sender)) {
+			FarionRemoteConsoleCommandSender remote = Farion.remoteSenders.get(sender);
 			if(message.equalsIgnoreCase(".on")) {
 				sendMessage(sender, "Console output is now enabled");
-				Farion.remoteSenders.get(sender).setRecieve(true);
+				remote.setRecieve(true);
 				return;
 			} else if(message.equalsIgnoreCase(".off")) {
 				sendMessage(sender, "Console output is now disabled");
-				Farion.remoteSenders.get(sender).setRecieve(false);
+				remote.setRecieve(false);
 				return;
 			}
-			FarionRemoteServerCommandEvent event = new FarionRemoteServerCommandEvent(Farion.remoteSenders.get(sender), message);
+
+			FarionRemoteServerCommandEvent event = new FarionRemoteServerCommandEvent(remote, message);
 			Bukkit.getServer().getPluginManager().callEvent(event);
-			Bukkit.getServer().dispatchCommand(Farion.remoteSenders.get(sender), event.getCommand());
+			Bukkit.getServer().dispatchCommand(remote, event.getCommand());
 		}
 	}
 
