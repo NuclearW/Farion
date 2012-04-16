@@ -29,7 +29,7 @@ public class Farion extends JavaPlugin implements Listener {
 	public void onEnable() {
 		farionExecutor = new FarionCommandExecutor(this);
 
-		//Nuke: Unused executor, I did NOT bind anything to it yet.  Don't forget to register commands.
+		getCommand("farion").setExecutor(farionExecutor);
 
 		Config.load(this);
 		

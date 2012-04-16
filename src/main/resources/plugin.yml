@@ -3,3 +3,16 @@ main: com.nuclearw.farion.Farion
 version: ${project.version}
 authors: [NuclearW, Shatteredbeam]
 description: Farion is yet another IRC - Minecraft connection plugin designed specifically around the requirements of its authors
+commands:
+    farion:
+        description: Farion root command
+        usage: |
+            /<command>
+permissions:
+    farion.*:
+        description: Gives access to all Farion commands
+        children:
+            farion.remoteusernames: true
+    farion.remoteusernames:
+        description: Allows you to view a list of IRC nicks permitted to use console
+        default: op
