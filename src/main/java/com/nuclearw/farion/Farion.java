@@ -27,11 +27,10 @@ public class Farion extends JavaPlugin implements Listener {
 
 	@Override
 	public void onEnable() {
-		
 		farionExecutor = new FarionCommandExecutor(this);
-		
+
 		//Nuke: Unused executor, I did NOT bind anything to it yet.  Don't forget to register commands.
-		
+
 		Config.load(this);
 		
 		bot = new Bot(this);
