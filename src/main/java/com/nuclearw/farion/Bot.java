@@ -86,9 +86,13 @@ public class Bot extends PircBot {
 				return;
 			}
 
-			FarionRemoteServerCommandEvent event = new FarionRemoteServerCommandEvent(remote, message);
-			Bukkit.getServer().getPluginManager().callEvent(event);
-			Bukkit.getServer().dispatchCommand(remote, event.getCommand());
+			if(remote.doesRecieve()) {
+				FarionRemoteServerCommandEvent event = new FarionRemoteServerCommandEvent(remote, message);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+				Bukkit.getServer().dispatchCommand(remote, event.getCommand());
+			} else {
+				sendMessage(sender, "Cannot send console commands while console output is disabled!");
+			}
 		}
 	}
 
