@@ -27,6 +27,6 @@ public class FarionCommandExecutor implements CommandExecutor {
 		} else {
 			sender.sendMessage("You do not have permission to do that.");
 		}
-		return false;
+		return true;
 	}
 }
