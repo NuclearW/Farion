@@ -36,7 +36,7 @@ public class Bot extends PircBot {
 			//Schedule the actual task
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 				public void run() {
-					Farion.connect();
+					Farion.reconnect();
 				}
 			}, 200L);
 
