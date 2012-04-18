@@ -25,6 +25,7 @@ public class ColorConverter {
 
 	public static String ircToMinecraft(String input) {
 		input = removeIrcBackgroundColors(input);
+		input = padIrcColorCodes(input);
 		return swapFromTable(input, 0);
 	}
 
@@ -38,6 +39,10 @@ public class ColorConverter {
 			input = input.replaceAll(pair[from], pair[to]);
 		}
 		return input;
+	}
+
+	private static String padIrcColorCodes(String input) {
+		return input.replaceAll("\u0003([1-9]{1}(?:[^0-9]|$))(.*)", "\u00030$1$2");
 	}
 
 	private static String removeIrcBackgroundColors(String input) {
