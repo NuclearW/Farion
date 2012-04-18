@@ -132,7 +132,7 @@ public class Farion extends JavaPlugin implements Listener {
 	}
 
 	//Server chatter handler
-	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onServerCommand(ServerCommandEvent event) {
 		if(event.getCommand().toLowerCase().startsWith("say")) {
 			String[] words = event.getCommand().split(" ");
