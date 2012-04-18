@@ -7,6 +7,7 @@ public class ColorConverter {
 		{"\u000302" , "\u00A71"},	// Dark Blue
 		{"\u000303" , "\u00A72"},	// Dark Green
 		{"\u000304" , "\u00A74"},	// Red
+		{"\u000304" , "\u00A7c"},	// Red (Reverse only for minecraft §c)
 		{"\u000305" , "\u00A76"},	// Brown
 		{"\u000306" , "\u00A75"},	// Purple
 		{"\u000307" , "\u00A7a"},	// Olive
