@@ -19,7 +19,7 @@ public class FarionRemoteConsoleCommandSender extends ServerCommandSender implem
 
 	public void sendMessage(String message) {
 		try {
-			if(recieve) bot.sendMessage(name, message);
+			if(recieve) bot.sendMessage(name, ColorConverter.minecraftToIrc(message));
 		} catch(NullPointerException ex) {
 			System.out.println("[Farion] Attempted to send a message in response to a command but bot was null!");
 		}

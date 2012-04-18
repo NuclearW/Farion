@@ -65,7 +65,7 @@ public class Bot extends PircBot {
 				return;
 			}
 
-			plugin.getServer().broadcastMessage("[IRC] <" + sender + "> " + message);
+			plugin.getServer().broadcastMessage("[IRC] <" + sender + "> " + ColorConverter.ircToMinecraft(message));
 //			plugin.getLogger().info("[IRC][" + Config.channel + "] <" + sender + "> " + message);
 		} else if(channel.equalsIgnoreCase(Config.modChannel)) {
 			// TODO: Mod Channel
