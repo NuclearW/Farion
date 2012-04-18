@@ -41,6 +41,6 @@ public class ColorConverter {
 	}
 
 	private static String removeIrcBackgroundColors(String input) {
-		return input.replaceAll("\0003([0-9]{1}[0-5]?){1}(?:,[0-9]{1}[0-5]?){1}", "\u0003$1");
+		return input.replaceAll("\u0003([0-9]{1}[0-5]?){1}(?:,[0-9]{1}[0-5]?){1}(.*)", "\u0003$1$2");
 	}
 }
