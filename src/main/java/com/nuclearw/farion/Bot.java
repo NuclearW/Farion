@@ -49,8 +49,6 @@ public class Bot extends PircBot {
 	@Override
 	protected void onMessage(String channel, String sender, String login, String hostname, String message) {
 		if(channel.equalsIgnoreCase(Config.channel)) {
-			message = Colors.removeFormattingAndColors(message);
-
 			if(message.equalsIgnoreCase(".players")) {
 				if(plugin.getServer().getOnlinePlayers().length == 0) {
 					sendMessage(Config.channel, "Nobody online here.");
