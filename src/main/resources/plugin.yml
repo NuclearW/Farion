@@ -7,12 +7,17 @@ commands:
     farion:
         description: Farion root command
         usage: |
-            /<command>
+            /<command> remote
+            /<command> reconnect
 permissions:
     farion.*:
         description: Gives access to all Farion commands
         children:
             farion.remoteusernames: true
+            farion.reconnect: true
     farion.remoteusernames:
         description: Allows you to view a list of IRC nicks permitted to use console
+        default: op
+    farion.reconnect:
+        description: Allows you to force the bot to reconnect to the server
         default: op

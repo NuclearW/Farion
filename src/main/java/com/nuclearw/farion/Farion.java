@@ -77,6 +77,11 @@ public class Farion extends JavaPlugin implements Listener {
 		}
 	}
 
+	public static void reconnect() {
+		bot.disconnect();
+		connect();
+	}
+
 	//Connect to the IRC server
 	public static void connect() {
 		try {
