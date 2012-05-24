@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.jibble.pircbot.Colors;
 import org.jibble.pircbot.DccChat;
 import org.jibble.pircbot.PircBot;
+import org.jibble.pircbot.User;
 
 public class Bot extends PircBot {
 	private static Farion plugin;
@@ -63,6 +64,42 @@ public class Bot extends PircBot {
 				return;
 			}
 
+			if(message.toLowerCase().startsWith(".kick ")) {
+				if(!isVoiceOrOp(sender, channel)) {
+					sendMessage(Config.channel, "nope.avi");
+					return;
+				}
+
+				String words[] = message.split(" ");
+
+				if(words.length < 2) {
+					sendMessage(Config.channel, "You're doing it wrong " + sender);
+					return;
+				}
+
+				String target = words[1];
+
+				Player player = plugin.getServer().getPlayer(target);
+				if(player == null) {
+					sendMessage(Config.channel, "Cannot find player by the name of " + target);
+					return;
+				}
+
+				String kickMessage = "";
+
+				if(words.length > 2) {
+					for(int i = 2; i < words.length; i++) {
+						kickMessage += words[i] + " ";
+					}
+					kickMessage = kickMessage.substring(0, kickMessage.length()-1);
+				} else {
+					kickMessage = "Kicked by admin.";
+				}
+
+				player.kickPlayer(kickMessage);
+
+				return;
+			}
 			plugin.getServer().broadcastMessage("[IRC] <" + sender + "> " + ColorConverter.ircToMinecraft(message));
 //			plugin.getLogger().info("[IRC][" + Config.channel + "] <" + sender + "> " + message);
 		} else if(channel.equalsIgnoreCase(Config.modChannel)) {
@@ -127,5 +164,17 @@ public class Bot extends PircBot {
 			}
 		}
 		catch (IOException e) {}
+	}
+
+	private boolean isVoiceOrOp(String check, String channel) {
+		User[] users = getUsers(channel);
+		for(User user : users) {
+			if(user.isOp() || user.hasVoice()) {
+				if(user.getNick().equalsIgnoreCase(check)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
