@@ -100,6 +100,45 @@ public class Bot extends PircBot {
 
 				return;
 			}
+
+			if(message.toLowerCase().startsWith(".ban")) {
+				if(!isVoiceOrOp(sender, channel)) {
+					sendMessage(Config.channel, "nope.avi");
+					return;
+				}
+
+				String words[] = message.split(" ");
+
+				if(words.length < 2) {
+					sendMessage(Config.channel, "You're doing it wrong " + sender);
+					return;
+				}
+
+				String target = words[1];
+
+				Player player = plugin.getServer().getPlayer(target);
+				if(player == null) {
+					sendMessage(Config.channel, "Cannot find player by the name of " + target);
+					return;
+				}
+
+				String kickMessage = "";
+
+				if(words.length > 2) {
+					for(int i = 2; i < words.length; i++) {
+						kickMessage += words[i] + " ";
+					}
+					kickMessage = kickMessage.substring(0, kickMessage.length()-1);
+				} else {
+					kickMessage = "Banned by admin.";
+				}
+
+				player.setBanned(true);
+				player.kickPlayer(kickMessage);
+
+				return;
+			}
+
 			plugin.getServer().broadcastMessage("[IRC] <" + sender + "> " + ColorConverter.ircToMinecraft(message));
 //			plugin.getLogger().info("[IRC][" + Config.channel + "] <" + sender + "> " + message);
 		} else if(channel.equalsIgnoreCase(Config.modChannel)) {
