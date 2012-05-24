@@ -64,7 +64,7 @@ public class Bot extends PircBot {
 				return;
 			}
 
-			if(message.toLowerCase().startsWith(".kick ")) {
+			if(message.toLowerCase().startsWith(".kick")) {
 				if(!isVoiceOrOp(sender, channel)) {
 					sendMessage(Config.channel, "nope.avi");
 					return;
