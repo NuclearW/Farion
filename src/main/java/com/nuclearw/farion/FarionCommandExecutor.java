@@ -2,9 +2,15 @@
 // Implementation.
 package com.nuclearw.farion;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.jibble.pircbot.PircBot;
+import org.jibble.pircbot.Queue;
 
 public class FarionCommandExecutor implements CommandExecutor {
 	private Farion plugin;
@@ -34,6 +40,35 @@ public class FarionCommandExecutor implements CommandExecutor {
 		} else if(args[0].equalsIgnoreCase("reconnect")) {
 			if(sender.hasPermission("farion.reconnect")) {
 				Farion.reconnect();
+			} else {
+				sender.sendMessage("You do not have permission to do that.");
+			}
+			return true;
+		} else if(args[0].equalsIgnoreCase("clear")) {
+			if(sender.hasPermission("farion.clear")) {
+				try {
+					// Reflection time!
+					Field queueField = PircBot.class.getDeclaredField("_outQueue");
+					queueField.setAccessible(true);
+					Object queueObject = queueField.get(Farion.bot);
+					Method clearMethod = queueObject.getClass().getMethod("clear");
+					clearMethod.setAccessible(true);
+					clearMethod.invoke(queueObject);
+					clearMethod.setAccessible(false);
+					queueField.setAccessible(false);
+				} catch (SecurityException e) {
+					e.printStackTrace();
+				} catch (NoSuchFieldException e) {
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
 			} else {
 				sender.sendMessage("You do not have permission to do that.");
 			}

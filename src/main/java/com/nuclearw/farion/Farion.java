@@ -21,7 +21,7 @@ import org.jibble.pircbot.NickAlreadyInUseException;
 import org.jibble.pircbot.TrustingSSLSocketFactory;
 
 public class Farion extends JavaPlugin implements Listener {
-	private static Bot bot;
+	protected static Bot bot;
 	private FarionCommandExecutor farionExecutor;
 	protected static Map<String, FarionRemoteConsoleCommandSender> remoteSenders = new HashMap<String, FarionRemoteConsoleCommandSender>();
 
