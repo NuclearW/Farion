@@ -54,7 +54,7 @@ public class Farion extends JavaPlugin implements Listener {
 	}
 
 	//Chat Handler
-	@EventHandler(ignoreCancelled = true)
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onChat(AsyncPlayerChatEvent event) {
 		if(event.getRecipients().size() != getServer().getOnlinePlayers().length) return;
 		bot.sendMessage(Config.channel, "<" + event.getPlayer().getName() + "> " + ColorConverter.minecraftToIrc(event.getMessage()));
