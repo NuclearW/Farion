@@ -3,6 +3,9 @@ package com.nuclearw.farion;
 import org.bukkit.Bukkit;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import org.bukkit.entity.Player;
 import org.jibble.pircbot.DccChat;
@@ -214,5 +217,31 @@ public class Bot extends PircBot {
 			}
 		}
 		return false;
+	}
+
+	protected void clearQueue() {
+		try {
+			// Reflection time!
+			Field queueField = PircBot.class.getDeclaredField("_outQueue");
+			queueField.setAccessible(true);
+			Object queueObject = queueField.get(Farion.bot);
+			Method clearMethod = queueObject.getClass().getMethod("clear");
+			clearMethod.setAccessible(true);
+			clearMethod.invoke(queueObject);
+			clearMethod.setAccessible(false);
+			queueField.setAccessible(false);
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
 	}
 }
