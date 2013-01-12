@@ -141,6 +141,16 @@ public class Bot extends PircBot {
 				return;
 			}
 
+			if(message.toLowerCase().startsWith(".clear")) {
+				if(!isVoiceOrOp(sender, channel)) {
+					sendMessage(Config.channel, "nope.avi");
+					return;
+				}
+
+				clearQueue();
+				return;
+			}
+
 			plugin.getServer().broadcastMessage("[IRC] <" + sender + "> " + ColorConverter.ircToMinecraft(message));
 //			plugin.getLogger().info("[IRC][" + Config.channel + "] <" + sender + "> " + message);
 		} else if(channel.equalsIgnoreCase(Config.modChannel)) {
