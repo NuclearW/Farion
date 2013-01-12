@@ -5,7 +5,6 @@ import org.bukkit.Bukkit;
 import java.io.IOException;
 
 import org.bukkit.entity.Player;
-import org.jibble.pircbot.Colors;
 import org.jibble.pircbot.DccChat;
 import org.jibble.pircbot.PircBot;
 import org.jibble.pircbot.User;

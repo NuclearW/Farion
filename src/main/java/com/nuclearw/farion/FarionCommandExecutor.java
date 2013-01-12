@@ -10,9 +10,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jibble.pircbot.PircBot;
-import org.jibble.pircbot.Queue;
 
 public class FarionCommandExecutor implements CommandExecutor {
+	@SuppressWarnings("unused")
 	private Farion plugin;
 
 	public FarionCommandExecutor(Farion plugin) {

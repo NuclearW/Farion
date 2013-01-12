@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.nuclearw.farion</groupId>
     <artifactId>Farion</artifactId>
-    <version>0.3</version>
+    <version>0.4-1.4.6</version>
     <name>Farion</name>
     <url>https://github.com/NuclearW/Farion</url>
     <issueManagement>
