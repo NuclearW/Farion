@@ -6,8 +6,8 @@ Bot:
     RetryConnect: true
 Server:
     Hostname: irc.esper.net
-    Port: 6697
-    SSL: true
+    Port: 6667
+    SSL: false
 Channel:
     Name: "#channel"
 ModChannel:
