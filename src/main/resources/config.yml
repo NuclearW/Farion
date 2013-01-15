@@ -14,3 +14,8 @@ ModChannel:
     Name: "#channel"
 RemoteConsoleUsers:
     - "Username"
+Message:
+    IrcMessage: "<{username}> {message}"
+    IrcMeMessage: "* {username} {message}"
+    GameMessage: "&f[IRC] <{nickname}> {message}"
+    GameMeMessage: "&f[IRC] * {nickname} {message}"

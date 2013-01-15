@@ -9,6 +9,9 @@ public class Config {
 	public static boolean ssl, retryConnect;
 	public static List<String> remoteUsernames;
 
+	public static String ircMessage, gameMessage;
+	public static String ircMeMessage, gameMeMessage;
+
 	public static void load(Farion plugin) {
 		if(!new File(plugin.getDataFolder() , "config.yml").exists()) {
 			plugin.saveDefaultConfig();
@@ -26,6 +29,12 @@ public class Config {
 		channel = plugin.getConfig().getString("Channel.Name");
 
 		modChannel = plugin.getConfig().getString("ModChannel.Name");
+
+		ircMessage = plugin.getConfig().getString("Message.IrcMessage");
+		gameMessage = plugin.getConfig().getString("Message.GameMessage");
+
+		ircMeMessage = plugin.getConfig().getString("Message.IrcMeMessage");
+		gameMeMessage = plugin.getConfig().getString("Message.GameMeMessage");
 
 		remoteUsernames = plugin.getConfig().getStringList("RemoteConsoleUsers");
 	}

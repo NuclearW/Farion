@@ -57,7 +57,12 @@ public class Farion extends JavaPlugin implements Listener {
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onChat(AsyncPlayerChatEvent event) {
 		if(event.getRecipients().size() != getServer().getOnlinePlayers().length) return;
-		bot.sendMessage(Config.channel, "<" + event.getPlayer().getName() + "> " + ColorConverter.minecraftToIrc(event.getMessage()));
+
+		String sendMessage = Config.ircMessage
+		                     .replaceAll("\\{username\\}", event.getPlayer().getName())
+		                     .replaceAll("\\{message\\}", ColorConverter.minecraftToIrc(event.getMessage()));
+
+		bot.sendMessage(Config.channel, sendMessage);
 		// TODO: Mod Channel ?
 	}
 
@@ -73,7 +78,11 @@ public class Farion extends JavaPlugin implements Listener {
 				message += " " + words[i];
 			}
 
-			bot.sendMessage(Config.channel, "* " + event.getPlayer().getName() + " " + message);
+			String sendMessage = Config.ircMeMessage
+			                     .replaceAll("\\{username\\}", event.getPlayer().getName())
+			                     .replaceAll("\\{message\\}", message);
+
+			bot.sendMessage(Config.channel, sendMessage);
 			// TODO: Mod Channel ?
 		}
 	}

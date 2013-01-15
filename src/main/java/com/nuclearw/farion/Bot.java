@@ -1,6 +1,7 @@
 package com.nuclearw.farion;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -151,7 +152,11 @@ public class Bot extends PircBot {
 				return;
 			}
 
-			plugin.getServer().broadcastMessage("[IRC] <" + sender + "> " + ColorConverter.ircToMinecraft(message));
+			String sendMessage = ChatColor.translateAlternateColorCodes('&', Config.gameMessage)
+			                     .replaceAll("\\{nickname\\}", sender)
+			                     .replaceAll("\\{message\\}", ColorConverter.ircToMinecraft(message));
+
+			plugin.getServer().broadcastMessage(sendMessage);
 //			plugin.getLogger().info("[IRC][" + Config.channel + "] <" + sender + "> " + message);
 		} else if(channel.equalsIgnoreCase(Config.modChannel)) {
 			// TODO: Mod Channel
@@ -185,7 +190,11 @@ public class Bot extends PircBot {
 	@Override
 	protected void onAction(String sender, String login, String hostname, String target, String action) {
 		if(target.equalsIgnoreCase(Config.channel)) {
-			plugin.getServer().broadcastMessage("[IRC] * " + sender + " " + action);
+			String sendMessage = ChatColor.translateAlternateColorCodes('&', Config.gameMeMessage)
+			                     .replaceAll("\\{nickname\\}", sender)
+			                     .replaceAll("\\{message\\}", action);
+
+			plugin.getServer().broadcastMessage(sendMessage);
 //			plugin.getLogger().info("[IRC] * " + sender + " " + action);
 		} else if(target.equalsIgnoreCase(Config.modChannel)) {
 			// TODO: Mod channel
