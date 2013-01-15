@@ -57,6 +57,7 @@
                     <artifactSet>
                         <includes>
                             <include>pircbot:pircbot</include>
+                            <include>org.mcstats.bukkit:metrics</include>
                         </includes>
                     </artifactSet>
                 </configuration>
@@ -75,6 +76,10 @@
         <repository>
             <id>bukkit-repo</id>
             <url>http://repo.bukkit.org/content/groups/public/</url>
+        </repository>
+		<repository>
+            <id>Plugin Metrics</id>
+            <url>http://repo.mcstats.org/content/repositories/public</url>
         </repository>
     </repositories>
     <dependencies>
@@ -97,6 +102,12 @@
             <artifactId>pircbot</artifactId>
             <version>1.5.0</version>
             <classifier>ssl</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.mcstats.bukkit</groupId>
+            <artifactId>metrics</artifactId>
+            <version>R6</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <properties>

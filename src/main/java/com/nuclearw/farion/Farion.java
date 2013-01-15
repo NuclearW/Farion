@@ -19,6 +19,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jibble.pircbot.IrcException;
 import org.jibble.pircbot.NickAlreadyInUseException;
 import org.jibble.pircbot.TrustingSSLSocketFactory;
+import org.mcstats.Metrics;
 
 public class Farion extends JavaPlugin implements Listener {
 	protected static Bot bot;
@@ -44,6 +45,8 @@ public class Farion extends JavaPlugin implements Listener {
 		connect();
 
 		getServer().getPluginManager().registerEvents(this, this);
+
+		metrics();
 
 		getLogger().info("Finished Loading " + getDescription().getFullName());
 	}
@@ -156,5 +159,12 @@ public class Farion extends JavaPlugin implements Listener {
 			bot.sendMessage(Config.channel, "<*Console*> " + message);
 			// TODO: Mod Channel ?
 		}
+	}
+
+	private void metrics() {
+		try {
+			Metrics metrics = new Metrics(this);
+			metrics.start();
+		} catch (IOException e) { }
 	}
 }
