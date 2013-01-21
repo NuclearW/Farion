@@ -99,9 +99,17 @@ public class Farion extends JavaPlugin implements Listener {
 	public static void connect() {
 		try {
 			if(Config.ssl) {
-				bot.connect(Config.hostname, Config.port, new TrustingSSLSocketFactory());
+				if(Config.password == null) {
+					bot.connect(Config.hostname, Config.port, new TrustingSSLSocketFactory());
+				} else {
+					bot.connect(Config.hostname, Config.port, Config.password, new TrustingSSLSocketFactory());
+				}
 			} else {
-				bot.connect(Config.hostname, Config.port, null);
+				if(Config.password == null) {
+					bot.connect(Config.hostname, Config.port, null);
+				} else {
+					bot.connect(Config.hostname, Config.port, Config.password, null);
+				}
 			}
 
 			bot.joinChannel(Config.channel);

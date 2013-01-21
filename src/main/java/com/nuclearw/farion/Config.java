@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 
 public class Config {
-	public static String nick, nickServPassword, channel, dccPassword, modChannel, hostname;
+	public static String nick, nickServPassword, channel, dccPassword, modChannel, hostname, password;
 	public static int port;
 	public static boolean ssl, retryConnect;
 	public static List<String> remoteUsernames;
@@ -25,6 +25,7 @@ public class Config {
 		hostname = plugin.getConfig().getString("Server.Hostname");
 		port = plugin.getConfig().getInt("Server.Port");
 		ssl = plugin.getConfig().getBoolean("Server.SSL");
+		password = plugin.getConfig().getString("Server.Password");
 
 		channel = plugin.getConfig().getString("Channel.Name");
 

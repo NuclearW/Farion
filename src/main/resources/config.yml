@@ -8,6 +8,7 @@ Server:
     Hostname: irc.esper.net
     Port: 6667
     SSL: false
+    Password: ""
 Channel:
     Name: "#channel"
 ModChannel:
