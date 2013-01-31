@@ -62,8 +62,8 @@ public class Farion extends JavaPlugin implements Listener {
 		if(event.getRecipients().size() != getServer().getOnlinePlayers().length) return;
 
 		String sendMessage = Config.ircMessage
-		                     .replaceAll("\\{username\\}", event.getPlayer().getName())
-		                     .replaceAll("\\{message\\}", ColorConverter.minecraftToIrc(event.getMessage()));
+		                     .replace("{username}", event.getPlayer().getName())
+		                     .replace("{message}", ColorConverter.minecraftToIrc(event.getMessage()));
 
 		bot.sendMessage(Config.channel, sendMessage);
 		// TODO: Mod Channel ?
@@ -82,8 +82,8 @@ public class Farion extends JavaPlugin implements Listener {
 			}
 
 			String sendMessage = Config.ircMeMessage
-			                     .replaceAll("\\{username\\}", event.getPlayer().getName())
-			                     .replaceAll("\\{message\\}", message);
+			                     .replace("{username}", event.getPlayer().getName())
+			                     .replace("{message}", message);
 
 			bot.sendMessage(Config.channel, sendMessage);
 			// TODO: Mod Channel ?

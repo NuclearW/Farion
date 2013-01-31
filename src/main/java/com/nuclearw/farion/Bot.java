@@ -153,8 +153,8 @@ public class Bot extends PircBot {
 			}
 
 			String sendMessage = ChatColor.translateAlternateColorCodes('&', Config.gameMessage)
-			                     .replaceAll("\\{nickname\\}", sender)
-			                     .replaceAll("\\{message\\}", ColorConverter.ircToMinecraft(message));
+			                     .replace("{nickname}", sender)
+			                     .replace("{message}", ColorConverter.ircToMinecraft(message));
 
 			plugin.getServer().broadcastMessage(sendMessage);
 //			plugin.getLogger().info("[IRC][" + Config.channel + "] <" + sender + "> " + message);
@@ -191,8 +191,8 @@ public class Bot extends PircBot {
 	protected void onAction(String sender, String login, String hostname, String target, String action) {
 		if(target.equalsIgnoreCase(Config.channel)) {
 			String sendMessage = ChatColor.translateAlternateColorCodes('&', Config.gameMeMessage)
-			                     .replaceAll("\\{nickname\\}", sender)
-			                     .replaceAll("\\{message\\}", action);
+			                     .replace("{nickname}", sender)
+			                     .replace("{message}", action);
 
 			plugin.getServer().broadcastMessage(sendMessage);
 //			plugin.getLogger().info("[IRC] * " + sender + " " + action);
