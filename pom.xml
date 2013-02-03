@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.nuclearw.farion</groupId>
     <artifactId>Farion</artifactId>
-    <version>0.5-1.4.6</version>
+    <version>0.6-1.4.7</version>
     <name>Farion</name>
     <url>https://github.com/NuclearW/Farion</url>
     <issueManagement>
@@ -49,7 +49,7 @@
                     </execution>
                 </executions>
             </plugin>
-			<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>1.5</version>
@@ -60,6 +60,12 @@
                             <include>org.mcstats.bukkit:metrics</include>
                         </includes>
                     </artifactSet>
+                    <relocations>
+                        <relocation>
+                            <pattern>org.mcstats</pattern>
+                            <shadedPattern>com.nuclearw.farion.mcstats</shadedPattern>
+                        </relocation>
+                    </relocations>
                 </configuration>
                 <executions>
                     <execution>
@@ -84,7 +90,7 @@
             <id>bukkit-repo</id>
             <url>http://repo.bukkit.org/content/groups/public/</url>
         </repository>
-		<repository>
+        <repository>
             <id>Plugin Metrics</id>
             <url>http://repo.mcstats.org/content/repositories/public</url>
         </repository>
@@ -100,7 +106,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>1.4.6-R0.3</version>
+            <version>1.4.7-R1.0</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
