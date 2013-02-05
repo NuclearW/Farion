@@ -13,6 +13,8 @@ import org.jibble.pircbot.DccChat;
 import org.jibble.pircbot.PircBot;
 import org.jibble.pircbot.User;
 
+import com.nuclearw.farion.runnable.RemovePlayerTask;
+
 public class Bot extends PircBot {
 	private static Farion plugin;
 
@@ -99,7 +101,7 @@ public class Bot extends PircBot {
 					kickMessage = "Kicked by admin.";
 				}
 
-				player.kickPlayer(kickMessage);
+				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new RemovePlayerTask(player, kickMessage, false));
 
 				return;
 			}
@@ -136,8 +138,7 @@ public class Bot extends PircBot {
 					kickMessage = "Banned by admin.";
 				}
 
-				player.setBanned(true);
-				player.kickPlayer(kickMessage);
+				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new RemovePlayerTask(player, kickMessage, true));
 
 				return;
 			}
