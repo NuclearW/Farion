@@ -11,6 +11,9 @@ Server:
     Password: ""
 Channel:
     Name: "#channel"
+    ShowJoins: true
+    ShowParts: true
+    ShowNickChanges: true
 ModChannel:
     Name: "#channel"
 RemoteConsoleUsers:
@@ -20,3 +23,6 @@ Message:
     IrcMeMessage: "* {username} {message}"
     GameMessage: "&f[IRC] <{nickname}> {message}"
     GameMeMessage: "&f[IRC] * {nickname} {message}"
+    JoinMessage: ""
+    PartMessage: ""
+    NickMessage: ""

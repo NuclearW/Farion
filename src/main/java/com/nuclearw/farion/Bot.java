@@ -51,7 +51,22 @@ public class Bot extends PircBot {
 			plugin.getLogger().info("RetryConnect is off: No additional connection attempts."); 
 		}
 	}
-
+	@Override
+	protected void onJoin(String channel, String sender, String login, String hostname) {
+	    if (channel.equalsIgnoreCase(Config.channel)) {
+		     if (Config.channelJoins == true) {
+                  plugin.getServer().broadcastMessage(sender + " has joined IRC.");
+             }
+		}
+	}
+	@Override
+	protected void onPart(String channel, String sender, String login, String hostname) {
+		if (channel.equalsIgnoreCase(Config.channel)) {
+			if (Config.channelParts == true) {
+				plugin.getServer().broadcastMessage(sender + " has left IRC.");
+			}
+		}
+	}
 	@Override
 	protected void onMessage(String channel, String sender, String login, String hostname, String message) {
 		if(channel.equalsIgnoreCase(Config.channel)) {
