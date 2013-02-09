@@ -67,6 +67,16 @@ public class Bot extends PircBot {
 			}
 		}
 	}
+	protected void onNickChange(String oldNick, String login, String hostname, String newNick) {
+			if(Config.channelNickChanges == true) {
+				for(User user : getUsers(Config.channel)) {
+					if(user.getNick().equals(newNick)) {
+						plugin.getServer().broadcastMessage("[IRC] " + oldNick + " is now " + newNick + ".");
+						return;
+					}
+				}
+			}
+	}
 	@Override
 	protected void onMessage(String channel, String sender, String login, String hostname, String message) {
 		if(channel.equalsIgnoreCase(Config.channel)) {

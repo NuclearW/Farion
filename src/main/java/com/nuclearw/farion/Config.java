@@ -6,7 +6,7 @@ import java.util.List;
 public class Config {
 	public static String nick, nickServPassword, channel, dccPassword, modChannel, hostname, password;
 	public static int port;
-	public static boolean ssl, retryConnect, channelParts, channelJoins;
+	public static boolean ssl, retryConnect, channelParts, channelJoins, channelNickChanges;
 	public static List<String> remoteUsernames;
 
 	public static String ircMessage, gameMessage;
@@ -30,6 +30,7 @@ public class Config {
 		channel = plugin.getConfig().getString("Channel.Name");
 		channelJoins = plugin.getConfig().getBoolean("Channel.ShowJoins");
 		channelParts = plugin.getConfig().getBoolean("Channel.ShowParts");
+		channelNickChanges = plugin.getConfig().getBoolean("Channel.ShowNickChanges");
 		modChannel = plugin.getConfig().getString("ModChannel.Name");
 
 		ircMessage = plugin.getConfig().getString("Message.IrcMessage");
