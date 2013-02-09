@@ -14,15 +14,19 @@ permissions:
     farion.*:
         description: Gives access to all Farion commands
         children:
+            farion.clear: true
+            farion.relay: true
             farion.remoteusernames: true
             farion.reconnect: true
-            farion.clear: true
+    farion.clear:
+        description: Allows you to clear the bot's send queue
+        default: op
+    farion.relay:
+        description: Allows game chat to be relayed to IRC.
+        default: true
     farion.remoteusernames:
         description: Allows you to view a list of IRC nicks permitted to use console
         default: op
     farion.reconnect:
         description: Allows you to force the bot to reconnect to the server
-        default: op
-    farion.clear:
-        description: Allows you to clear the bot's send queue
         default: op

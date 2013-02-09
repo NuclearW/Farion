@@ -60,6 +60,7 @@ public class Farion extends JavaPlugin implements Listener {
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onChat(AsyncPlayerChatEvent event) {
 		if(event.getRecipients().size() != getServer().getOnlinePlayers().length) return;
+		if(!event.getPlayer().hasPermission("farion.relay")) return;
 
 		if(Config.showIrcMeMessage) {
 			String sendMessage = Config.ircMessage
@@ -75,6 +76,8 @@ public class Farion extends JavaPlugin implements Listener {
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onCommandPreprocess(PlayerCommandPreprocessEvent event) {
 		if(event.getMessage().toLowerCase().startsWith("/me")) {
+			if(!event.getPlayer().hasPermission("farion.relay")) return;
+
 			String[] words = event.getMessage().split(" ");
 			if(words.length < 2) return;
 
