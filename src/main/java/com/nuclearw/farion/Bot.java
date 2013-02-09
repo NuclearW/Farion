@@ -55,7 +55,7 @@ public class Bot extends PircBot {
 	@Override
 	protected void onJoin(String channel, String sender, String login, String hostname) {
 		if(channel.equalsIgnoreCase(Config.channel)) {
-			if(Config.channelJoins == true) {
+			if(Config.showGameJoinMessage == true) {
 				String message = ChatColor.translateAlternateColorCodes('&', Config.gameJoinMessage)
 				                 .replace("{nickname}", sender);
 
@@ -67,7 +67,7 @@ public class Bot extends PircBot {
 	@Override
 	protected void onPart(String channel, String sender, String login, String hostname) {
 		if(channel.equalsIgnoreCase(Config.channel)) {
-			if(Config.channelParts == true) {
+			if(Config.showGamePartMessage == true) {
 				String message = ChatColor.translateAlternateColorCodes('&', Config.gamePartMessage)
 				                 .replace("{nickname}", sender);
 
@@ -77,7 +77,7 @@ public class Bot extends PircBot {
 	}
 
 	protected void onNickChange(String oldNick, String login, String hostname, String newNick) {
-		if(Config.channelNickChanges == true) {
+		if(Config.showGameNickChangeMessage == true) {
 			for(User user : getUsers(Config.channel)) {
 				if(user.getNick().equals(newNick)) {
 					String message = ChatColor.translateAlternateColorCodes('&', Config.gameNickChangeMessage)
@@ -192,11 +192,13 @@ public class Bot extends PircBot {
 				return;
 			}
 
-			String sendMessage = ChatColor.translateAlternateColorCodes('&', Config.gameMessage)
-			                     .replace("{nickname}", sender)
-			                     .replace("{message}", ColorConverter.ircToMinecraft(message));
+			if(Config.showGameMessage) {
+				String sendMessage = ChatColor.translateAlternateColorCodes('&', Config.gameMessage)
+				                     .replace("{nickname}", sender)
+				                     .replace("{message}", ColorConverter.ircToMinecraft(message));
 
-			plugin.getServer().broadcastMessage(sendMessage);
+				plugin.getServer().broadcastMessage(sendMessage);
+			}
 //			plugin.getLogger().info("[IRC][" + Config.channel + "] <" + sender + "> " + message);
 		} else if(channel.equalsIgnoreCase(Config.modChannel)) {
 			// TODO: Mod Channel
@@ -230,11 +232,13 @@ public class Bot extends PircBot {
 	@Override
 	protected void onAction(String sender, String login, String hostname, String target, String action) {
 		if(target.equalsIgnoreCase(Config.channel)) {
-			String sendMessage = ChatColor.translateAlternateColorCodes('&', Config.gameMeMessage)
-			                     .replace("{nickname}", sender)
-			                     .replace("{message}", action);
+			if(Config.showGameMeMessage) {
+				String sendMessage = ChatColor.translateAlternateColorCodes('&', Config.gameMeMessage)
+				                     .replace("{nickname}", sender)
+				                     .replace("{message}", action);
 
-			plugin.getServer().broadcastMessage(sendMessage);
+				plugin.getServer().broadcastMessage(sendMessage);
+			}
 //			plugin.getLogger().info("[IRC] * " + sender + " " + action);
 		} else if(target.equalsIgnoreCase(Config.modChannel)) {
 			// TODO: Mod channel

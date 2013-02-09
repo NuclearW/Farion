@@ -11,11 +11,15 @@ public class Config {
 
 	public static String ircMessage, ircMeMessage;
 	public static String ircJoinMessage, ircPartMessage;
+
 	public static String gameMessage, gameMeMessage;
 	public static String gameJoinMessage, gamePartMessage, gameNickChangeMessage;
 
-	public static boolean channelJoins, channelParts, channelNickChanges;
-	public static boolean gameJoins, gameParts;
+	public static boolean showIrcMessage, showIrcMeMessage;
+	public static boolean showIrcJoinMessage, showIrcPartMessage;
+
+	public static boolean showGameMessage, showGameMeMessage;
+	public static boolean showGameJoinMessage, showGamePartMessage, showGameNickChangeMessage;
 
 	public static void load(Farion plugin) {
 		if(!new File(plugin.getDataFolder() , "config.yml").exists()) {
@@ -48,12 +52,16 @@ public class Config {
 		gamePartMessage = plugin.getConfig().getString("Message.Game.PartMessage");
 		gameNickChangeMessage = plugin.getConfig().getString("Message.Game.NickMessage");
 
-		channelJoins = !gameJoinMessage.isEmpty();
-		channelParts = !gamePartMessage.isEmpty();
-		channelNickChanges = !gameNickChangeMessage.isEmpty();
+		showGameMessage = !gameMessage.isEmpty();
+		showGameMeMessage = !gameMeMessage.isEmpty();
+		showGameJoinMessage = !gameJoinMessage.isEmpty();
+		showGamePartMessage = !gamePartMessage.isEmpty();
+		showGameNickChangeMessage = !gameNickChangeMessage.isEmpty();
 
-		gameJoins = !ircJoinMessage.isEmpty();
-		gameParts = !ircPartMessage.isEmpty();
+		showIrcMessage = !ircMessage.isEmpty();
+		showIrcMeMessage = !ircMeMessage.isEmpty();
+		showIrcJoinMessage = !ircJoinMessage.isEmpty();
+		showIrcPartMessage = !ircPartMessage.isEmpty();
 
 		remoteUsernames = plugin.getConfig().getStringList("RemoteConsoleUsers");
 	}

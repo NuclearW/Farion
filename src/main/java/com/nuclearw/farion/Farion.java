@@ -61,11 +61,13 @@ public class Farion extends JavaPlugin implements Listener {
 	public void onChat(AsyncPlayerChatEvent event) {
 		if(event.getRecipients().size() != getServer().getOnlinePlayers().length) return;
 
-		String sendMessage = Config.ircMessage
-		                     .replace("{username}", event.getPlayer().getName())
-		                     .replace("{message}", ColorConverter.minecraftToIrc(event.getMessage()));
+		if(Config.showIrcMeMessage) {
+			String sendMessage = Config.ircMessage
+			                     .replace("{username}", event.getPlayer().getName())
+			                     .replace("{message}", ColorConverter.minecraftToIrc(event.getMessage()));
 
-		bot.sendMessage(Config.channel, sendMessage);
+			bot.sendMessage(Config.channel, sendMessage);
+		}
 		// TODO: Mod Channel ?
 	}
 
@@ -81,11 +83,13 @@ public class Farion extends JavaPlugin implements Listener {
 				message += " " + words[i];
 			}
 
-			String sendMessage = Config.ircMeMessage
-			                     .replace("{username}", event.getPlayer().getName())
-			                     .replace("{message}", message);
+			if(Config.showIrcMeMessage) {
+				String sendMessage = Config.ircMeMessage
+				                     .replace("{username}", event.getPlayer().getName())
+				                     .replace("{message}", message);
 
-			bot.sendMessage(Config.channel, sendMessage);
+				bot.sendMessage(Config.channel, sendMessage);
+			}
 			// TODO: Mod Channel ?
 		}
 	}
@@ -129,7 +133,7 @@ public class Farion extends JavaPlugin implements Listener {
 	//Join Handler
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		if(!Config.gameJoins) return;
+		if(!Config.showIrcJoinMessage) return;
 
 		String message = Config.ircJoinMessage
 		                 .replace("{username}", event.getPlayer().getName())
@@ -141,7 +145,7 @@ public class Farion extends JavaPlugin implements Listener {
 	//Quit Handler
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		if(!Config.gameParts) return;
+		if(!Config.showIrcPartMessage) return;
 
 		String message = Config.ircPartMessage
 		                 .replace("{username}", event.getPlayer().getName())
