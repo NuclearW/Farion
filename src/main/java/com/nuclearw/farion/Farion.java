@@ -129,13 +129,25 @@ public class Farion extends JavaPlugin implements Listener {
 	//Join Handler
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		bot.sendMessage(Config.channel, event.getPlayer().getName() + " logged in.");
+		if(!Config.gameJoins) return;
+
+		String message = Config.ircJoinMessage
+		                 .replace("{username}", event.getPlayer().getName())
+		                 .replace("{displayname}", event.getPlayer().getDisplayName());
+
+		bot.sendMessage(Config.channel, message);
 	}
 
 	//Quit Handler
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-	public void onPlayerJoin(PlayerQuitEvent event) {
-		bot.sendMessage(Config.channel, event.getPlayer().getName() + " left the server.");
+	public void onPlayerQuit(PlayerQuitEvent event) {
+		if(!Config.gameParts) return;
+
+		String message = Config.ircPartMessage
+		                 .replace("{username}", event.getPlayer().getName())
+		                 .replace("{displayname}", event.getPlayer().getDisplayName());
+
+		bot.sendMessage(Config.channel, message);
 	}
 
 	//Kick Handler

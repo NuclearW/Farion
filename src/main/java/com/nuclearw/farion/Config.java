@@ -10,10 +10,12 @@ public class Config {
 	public static List<String> remoteUsernames;
 
 	public static String ircMessage, ircMeMessage;
+	public static String ircJoinMessage, ircPartMessage;
 	public static String gameMessage, gameMeMessage;
 	public static String gameJoinMessage, gamePartMessage, gameNickChangeMessage;
 
 	public static boolean channelJoins, channelParts, channelNickChanges;
+	public static boolean gameJoins, gameParts;
 
 	public static void load(Farion plugin) {
 		if(!new File(plugin.getDataFolder() , "config.yml").exists()) {
@@ -36,6 +38,8 @@ public class Config {
 		// Game -> IRC
 		ircMessage = plugin.getConfig().getString("Message.Irc.Message");
 		ircMeMessage = plugin.getConfig().getString("Message.Irc.MeMessage");
+		ircJoinMessage = plugin.getConfig().getString("Message.Irc.JoinMessage");
+		ircPartMessage = plugin.getConfig().getString("Message.Irc.PartMessage");
 
 		// IRC -> Game
 		gameMessage = plugin.getConfig().getString("Message.Game.Message");
@@ -47,6 +51,9 @@ public class Config {
 		channelJoins = !gameJoinMessage.isEmpty();
 		channelParts = !gamePartMessage.isEmpty();
 		channelNickChanges = !gameNickChangeMessage.isEmpty();
+
+		gameJoins = !ircJoinMessage.isEmpty();
+		gameParts = !ircPartMessage.isEmpty();
 
 		remoteUsernames = plugin.getConfig().getStringList("RemoteConsoleUsers");
 	}

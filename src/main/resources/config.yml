@@ -20,6 +20,8 @@ Message:
     Irc:
         Message: "<{username}> {message}"
         MeMessage: "* {username} {message}"
+        JoinMessage: "{username} logged in."
+        PartMessage: "{username} has left the server."
     # IRC -> Game
     Game:
         Message: "&r[IRC] <{nickname}> {message}"
