@@ -6,11 +6,14 @@ import java.util.List;
 public class Config {
 	public static String nick, nickServPassword, channel, dccPassword, modChannel, hostname, password;
 	public static int port;
-	public static boolean ssl, retryConnect, channelParts, channelJoins, channelNickChanges;
+	public static boolean ssl, retryConnect;
 	public static List<String> remoteUsernames;
 
-	public static String ircMessage, gameMessage;
-	public static String ircMeMessage, gameMeMessage;
+	public static String ircMessage, ircMeMessage;
+	public static String gameMessage, gameMeMessage;
+	public static String gameJoinMessage, gamePartMessage, gameNickChangeMessage;
+
+	public static boolean channelJoins, channelParts, channelNickChanges;
 
 	public static void load(Farion plugin) {
 		if(!new File(plugin.getDataFolder() , "config.yml").exists()) {
@@ -28,16 +31,22 @@ public class Config {
 		password = plugin.getConfig().getString("Server.Password");
 
 		channel = plugin.getConfig().getString("Channel.Name");
-		channelJoins = plugin.getConfig().getBoolean("Channel.ShowJoins");
-		channelParts = plugin.getConfig().getBoolean("Channel.ShowParts");
-		channelNickChanges = plugin.getConfig().getBoolean("Channel.ShowNickChanges");
 		modChannel = plugin.getConfig().getString("ModChannel.Name");
 
-		ircMessage = plugin.getConfig().getString("Message.IrcMessage");
-		gameMessage = plugin.getConfig().getString("Message.GameMessage");
+		// Game -> IRC
+		ircMessage = plugin.getConfig().getString("Message.Irc.Message");
+		ircMeMessage = plugin.getConfig().getString("Message.Irc.MeMessage");
 
-		ircMeMessage = plugin.getConfig().getString("Message.IrcMeMessage");
-		gameMeMessage = plugin.getConfig().getString("Message.GameMeMessage");
+		// IRC -> Game
+		gameMessage = plugin.getConfig().getString("Message.Game.Message");
+		gameMeMessage = plugin.getConfig().getString("Message.Game.MeMessage");
+		gameJoinMessage = plugin.getConfig().getString("Message.Game.JoinMessage");
+		gamePartMessage = plugin.getConfig().getString("Message.Game.PartMessage");
+		gameNickChangeMessage = plugin.getConfig().getString("Message.Game.NickMessage");
+
+		channelJoins = !gameJoinMessage.isEmpty();
+		channelParts = !gamePartMessage.isEmpty();
+		channelNickChanges = !gameNickChangeMessage.isEmpty();
 
 		remoteUsernames = plugin.getConfig().getStringList("RemoteConsoleUsers");
 	}

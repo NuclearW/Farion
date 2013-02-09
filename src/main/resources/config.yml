@@ -11,18 +11,19 @@ Server:
     Password: ""
 Channel:
     Name: "#channel"
-    ShowJoins: true
-    ShowParts: true
-    ShowNickChanges: true
 ModChannel:
     Name: "#channel"
 RemoteConsoleUsers:
     - "Username"
 Message:
-    IrcMessage: "<{username}> {message}"
-    IrcMeMessage: "* {username} {message}"
-    GameMessage: "&r[IRC] <{nickname}> {message}"
-    GameMeMessage: "&r[IRC] * {nickname} {message}"
-    JoinMessage: ""
-    PartMessage: ""
-    NickMessage: ""
+    # Game -> IRC
+    Irc:
+        Message: "<{username}> {message}"
+        MeMessage: "* {username} {message}"
+    # IRC -> Game
+    Game:
+        Message: "&r[IRC] <{nickname}> {message}"
+        MeMessage: "&r[IRC] * {nickname} {message}"
+        JoinMessage: "&r[IRC] {nickname} has joined."
+        PartMessage: "&r[IRC] {nickname} has left."
+        NickMessage: "&r[IRC] {oldnick} is now {newnick}"

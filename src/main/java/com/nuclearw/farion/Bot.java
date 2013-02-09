@@ -56,7 +56,10 @@ public class Bot extends PircBot {
 	protected void onJoin(String channel, String sender, String login, String hostname) {
 		if(channel.equalsIgnoreCase(Config.channel)) {
 			if(Config.channelJoins == true) {
-				plugin.getServer().broadcastMessage(sender + " has joined IRC.");
+				String message = ChatColor.translateAlternateColorCodes('&', Config.gameJoinMessage)
+				                 .replace("{nickname}", sender);
+
+				plugin.getServer().broadcastMessage(message);
 			}
 		}
 	}
@@ -65,7 +68,10 @@ public class Bot extends PircBot {
 	protected void onPart(String channel, String sender, String login, String hostname) {
 		if(channel.equalsIgnoreCase(Config.channel)) {
 			if(Config.channelParts == true) {
-				plugin.getServer().broadcastMessage(sender + " has left IRC.");
+				String message = ChatColor.translateAlternateColorCodes('&', Config.gamePartMessage)
+				                 .replace("{nickname}", sender);
+
+				plugin.getServer().broadcastMessage(message);
 			}
 		}
 	}
@@ -74,7 +80,11 @@ public class Bot extends PircBot {
 		if(Config.channelNickChanges == true) {
 			for(User user : getUsers(Config.channel)) {
 				if(user.getNick().equals(newNick)) {
-					plugin.getServer().broadcastMessage("[IRC] " + oldNick + " is now " + newNick + ".");
+					String message = ChatColor.translateAlternateColorCodes('&', Config.gameNickChangeMessage)
+					                 .replace("{oldnick}", oldNick)
+					                 .replace("{newnick}", newNick);
+
+					plugin.getServer().broadcastMessage(message);
 					return;
 				}
 			}
