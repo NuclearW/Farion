@@ -1,0 +1,28 @@
+Changelog:
+Versions without changelog are of no consequence or internal only.
+
+Key:
+  + Addition
+  = Fix
+  ! Change
+  - Removal
+
+v0.8-1.4.7
+ + Added 'farion.relay' permission node to allow/disallow group or player chat/action relay to IRC.  This node defaults to true.
+ + Customized messages for Join, Part, Nick change as displayed in game.
+ ! Set custom messages to null, or "", to disable display.
+ ! Allow Join/Part message customization.  The location of these items has changed inside config.yml.
+
+v0.7-1.4.7
+ = Fix a bug that would crash servers using .kick and .ban from IRC.
+
+v0.6-1.4.7
+ + Add server password option to config.
+ = Fix bug related to sending $ or \ in chat.
+ ! Update for compatibility for 1_4_R1 package releases.
+
+v0.5-1.4.6
+ + Add in config option for message formatting.
+ + Add Metrics so I can have sad graphs.
+
+(Changes prior considered alpha release and not relevant.)
