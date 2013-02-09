@@ -21,8 +21,8 @@ RemoteConsoleUsers:
 Message:
     IrcMessage: "<{username}> {message}"
     IrcMeMessage: "* {username} {message}"
-    GameMessage: "&f[IRC] <{nickname}> {message}"
-    GameMeMessage: "&f[IRC] * {nickname} {message}"
+    GameMessage: "&r[IRC] <{nickname}> {message}"
+    GameMeMessage: "&r[IRC] * {nickname} {message}"
     JoinMessage: ""
     PartMessage: ""
     NickMessage: ""
