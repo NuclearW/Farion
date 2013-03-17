@@ -8,6 +8,10 @@ Key:
   - Removal
 
 v0.8-1.4.7
+ + Added '/farion reload' command to reload the configuration
+ + Added 'farion.reload' permission for the '/farion reload' command
+
+v0.8-1.4.7
  + Added 'farion.relay' permission node to allow/disallow group or player chat/action relay to IRC.  This node defaults to true.
  + Customized messages for Join, Part, Nick change as displayed in game.
  ! Set custom messages to null, or "", to disable display.

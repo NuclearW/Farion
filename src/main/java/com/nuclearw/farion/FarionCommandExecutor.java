@@ -7,7 +7,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class FarionCommandExecutor implements CommandExecutor {
-	@SuppressWarnings("unused")
 	private Farion plugin;
 
 	public FarionCommandExecutor(Farion plugin) {
@@ -42,6 +41,14 @@ public class FarionCommandExecutor implements CommandExecutor {
 		} else if(args[0].equalsIgnoreCase("clear")) {
 			if(sender.hasPermission("farion.clear")) {
 				Farion.bot.clearQueue();
+			} else {
+				sender.sendMessage("You do not have permission to do that.");
+			}
+			return true;
+		} else if(args[0].equalsIgnoreCase("reload")) {
+			if(sender.hasPermission("farion.reload")) {
+				Config.reload(plugin);
+				sender.sendMessage("Reloaded config");
 			} else {
 				sender.sendMessage("You do not have permission to do that.");
 			}

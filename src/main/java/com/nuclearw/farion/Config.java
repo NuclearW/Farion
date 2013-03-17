@@ -65,4 +65,9 @@ public class Config {
 
 		remoteUsernames = plugin.getConfig().getStringList("RemoteConsoleUsers");
 	}
+
+	public static void reload(Farion plugin) {
+		plugin.reloadConfig();
+		load(plugin);
+	}
 }

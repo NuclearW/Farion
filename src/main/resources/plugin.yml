@@ -7,6 +7,7 @@ commands:
     farion:
         description: Farion root command
         usage: |
+            /<command> reload
             /<command> remote
             /<command> reconnect
             /<command> clear
@@ -16,6 +17,7 @@ permissions:
         children:
             farion.clear: true
             farion.relay: true
+            farion.reload: true
             farion.remoteusernames: true
             farion.reconnect: true
     farion.clear:
@@ -24,6 +26,9 @@ permissions:
     farion.relay:
         description: Allows game chat to be relayed to IRC.
         default: true
+    farion.reload:
+        description: Allows you to reload the configuration
+        default: op
     farion.remoteusernames:
         description: Allows you to view a list of IRC nicks permitted to use console
         default: op
