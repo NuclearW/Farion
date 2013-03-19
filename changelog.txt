@@ -7,7 +7,10 @@ Key:
   ! Change
   - Removal
 
-v0.8-1.4.7
+v0.9-1.5
+ ! Update for compatibility for 1_5_R1 package releases.
+
+v0.9-1.4.7
  + Added '/farion reload' command to reload the configuration
  + Added 'farion.reload' permission for the '/farion reload' command
 
