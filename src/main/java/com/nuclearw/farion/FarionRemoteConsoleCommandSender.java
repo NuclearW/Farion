@@ -1,7 +1,7 @@
 package com.nuclearw.farion;
 
 import org.bukkit.command.RemoteConsoleCommandSender;
-import org.bukkit.craftbukkit.v1_5_R1.command.ServerCommandSender;
+import org.bukkit.craftbukkit.v1_5_R2.command.ServerCommandSender;
 
 public class FarionRemoteConsoleCommandSender extends ServerCommandSender implements RemoteConsoleCommandSender {
 	private String name = "Farion";
