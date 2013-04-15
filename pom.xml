@@ -57,6 +57,7 @@
                     <artifactSet>
                         <includes>
                             <include>pircbot:pircbot</include>
+                            <include>org.pircbotx:pircbotx</include>
                             <include>org.mcstats.bukkit:metrics</include>
                         </includes>
                     </artifactSet>
@@ -121,6 +122,11 @@
             <artifactId>metrics</artifactId>
             <version>R6</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.pircbotx</groupId>
+            <artifactId>pircbotx</artifactId>
+            <version>1.9</version>
         </dependency>
     </dependencies>
     <distributionManagement>

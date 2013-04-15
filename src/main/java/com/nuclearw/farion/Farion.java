@@ -16,10 +16,13 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jibble.pircbot.IrcException;
-import org.jibble.pircbot.NickAlreadyInUseException;
-import org.jibble.pircbot.TrustingSSLSocketFactory;
+//import org.jibble.pircbot.IrcException;
+//import org.jibble.pircbot.NickAlreadyInUseException;
+//import org.jibble.pircbot.TrustingSSLSocketFactory;
 import org.mcstats.Metrics;
+import org.pircbotx.TrustingSSLSocketFactory;
+import org.pircbotx.exception.IrcException;
+import org.pircbotx.exception.NickAlreadyInUseException;
 
 public class Farion extends JavaPlugin implements Listener {
 	protected static Bot bot;
@@ -113,9 +116,9 @@ public class Farion extends JavaPlugin implements Listener {
 				}
 			} else {
 				if(Config.password == null) {
-					bot.connect(Config.hostname, Config.port, null);
+					bot.connect(Config.hostname, Config.port);
 				} else {
-					bot.connect(Config.hostname, Config.port, Config.password, null);
+					bot.connect(Config.hostname, Config.port, Config.password);
 				}
 			}
 

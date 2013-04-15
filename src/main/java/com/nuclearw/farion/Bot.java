@@ -9,13 +9,18 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.bukkit.entity.Player;
-import org.jibble.pircbot.DccChat;
-import org.jibble.pircbot.PircBot;
-import org.jibble.pircbot.User;
+//import org.jibble.pircbot.DccChat;
+//import org.jibble.pircbot.PircBot;
+//import org.jibble.pircbot.User;
+
+import org.pircbotx.Channel;
+import org.pircbotx.PircBotX;
+import org.pircbotx.User;
+import org.pircbotx.hooks.events.*;
 
 import com.nuclearw.farion.runnable.RemovePlayerTask;
 
-public class Bot extends PircBot {
+public class Bot extends PircBotX {
 	private static Farion plugin;
 
 	public Bot(Farion instance) {
@@ -23,16 +28,14 @@ public class Bot extends PircBot {
 
 		this.setName(Config.nick);
 	}
-
-	@Override
-	protected void onConnect() {
+ 
+	protected void onConnect(ConnectEvent event) throws Exception {
 		plugin.getLogger().info("Connected to IRC");
 		plugin.getLogger().info(Config.hostname + ", port " + Config.port);
 		identify(Config.nickServPassword);
 	}
 
-	@Override
-	protected void onDisconnect() {
+	protected void onDisconnect(DisconnectEvent event) throws Exception {
 		plugin.getLogger().info("Disconnected from IRC.");
 
 		//Set a delayed task to attempt a rejoin
@@ -52,72 +55,63 @@ public class Bot extends PircBot {
 		}
 	}
 
-	@Override
-	protected void onJoin(String channel, String sender, String login, String hostname) {
-		if(channel.equalsIgnoreCase(Config.channel)) {
+	protected void onJoin(JoinEvent event) throws Exception {
+		if(event.getChannel().toString().equalsIgnoreCase(Config.channel)) {
 			if(Config.showGameJoinMessage == true) {
 				String message = ChatColor.translateAlternateColorCodes('&', Config.gameJoinMessage)
-				                 .replace("{nickname}", sender);
+				                 .replace("{nickname}", event.getUser().toString());
 
 				plugin.getServer().broadcastMessage(message);
 			}
 		}
 	}
 
-	@Override
-	protected void onPart(String channel, String sender, String login, String hostname) {
-		if(channel.equalsIgnoreCase(Config.channel)) {
+	protected void onPart(PartEvent event) throws Exception {
+		if(event.getChannel().toString().equalsIgnoreCase(Config.channel)) {
 			if(Config.showGamePartMessage == true) {
 				String message = ChatColor.translateAlternateColorCodes('&', Config.gamePartMessage)
-				                 .replace("{nickname}", sender);
+				                 .replace("{nickname}", event.getUser().toString());
 
 				plugin.getServer().broadcastMessage(message);
 			}
 		}
 	}
 
-	protected void onNickChange(String oldNick, String login, String hostname, String newNick) {
-		if(Config.showGameNickChangeMessage == true) {
-			for(User user : getUsers(Config.channel)) {
-				if(user.getNick().equals(newNick)) {
-					String message = ChatColor.translateAlternateColorCodes('&', Config.gameNickChangeMessage)
-					                 .replace("{oldnick}", oldNick)
-					                 .replace("{newnick}", newNick);
+	protected void onNickChange(NickChangeEvent event) throws Exception {
+			String message = ChatColor.translateAlternateColorCodes('&', Config.gameNickChangeMessage)
+					       .replace("{oldnick}", event.getOldNick())
+					       .replace("{newnick}", event.getNewNick());
 
 					plugin.getServer().broadcastMessage(message);
 					return;
-				}
-			}
-		}
 	}
 
-	@Override
-	protected void onMessage(String channel, String sender, String login, String hostname, String message) {
-		if(channel.equalsIgnoreCase(Config.channel)) {
-			if(message.equalsIgnoreCase(".players")) {
+	protected void onMessage(MessageEvent event) throws Exception {
+		if(event.getChannel().toString().equalsIgnoreCase(Config.channel)) {
+			if(event.getMessage().equalsIgnoreCase(".players")) {
 				if(plugin.getServer().getOnlinePlayers().length == 0) {
-					sendMessage(Config.channel, "Nobody online here.");
+					event.getBot().sendMessage(event.getChannel(), "Nobody online here.");
 				} else {
 					String send = "Players online (" + plugin.getServer().getOnlinePlayers().length + "/" + plugin.getServer().getMaxPlayers() + "): ";
 					for(Player player : plugin.getServer().getOnlinePlayers()) {
 						send += player.getName() + ", ";
 					}
 					send = send.substring(0, send.length() - 2);
-					sendMessage(Config.channel, send);
+					event.getBot().sendMessage(event.getChannel(), send);
 				}
 				return;
 			}
 
-			if(message.toLowerCase().startsWith(".kick")) {
-				if(!isVoiceOrOp(sender, channel)) {
-					sendMessage(Config.channel, "nope.avi");
+			if(event.getMessage().toLowerCase().startsWith(".kick")) {
+				if(!isVoiceOrOp(event.getUser(), event.getChannel())) {
+					event.getBot().sendMessage(event.getChannel(), "nope.avi");
 					return;
 				}
 
-				String words[] = message.split(" ");
+				String words[] = event.getMessage().split(" ");
 
 				if(words.length < 2) {
-					sendMessage(Config.channel, "You're doing it wrong " + sender);
+					event.getBot().sendMessage(event.getChannel(), "You're doing it wrong " + event.getUser().getNick());
 					return;
 				}
 
@@ -125,7 +119,7 @@ public class Bot extends PircBot {
 
 				Player player = plugin.getServer().getPlayer(target);
 				if(player == null) {
-					sendMessage(Config.channel, "Cannot find player by the name of " + target);
+					event.getBot().sendMessage(event.getChannel(), "Cannot find player by the name of " + target);
 					return;
 				}
 
@@ -145,16 +139,16 @@ public class Bot extends PircBot {
 				return;
 			}
 
-			if(message.toLowerCase().startsWith(".ban")) {
-				if(!isVoiceOrOp(sender, channel)) {
-					sendMessage(Config.channel, "nope.avi");
+			if(event.getMessage().toLowerCase().startsWith(".ban")) {
+				if(!isVoiceOrOp(event.getUser(), event.getChannel())) {
+					event.getBot().sendMessage(event.getChannel(), "nope.avi");
 					return;
 				}
 
-				String words[] = message.split(" ");
+				String words[] = event.getMessage().split(" ");
 
 				if(words.length < 2) {
-					sendMessage(Config.channel, "You're doing it wrong " + sender);
+					event.getBot().sendMessage(event.getChannel(), "You're doing it wrong " + event.getUser().getNick());
 					return;
 				}
 
@@ -162,7 +156,7 @@ public class Bot extends PircBot {
 
 				Player player = plugin.getServer().getPlayer(target);
 				if(player == null) {
-					sendMessage(Config.channel, "Cannot find player by the name of " + target);
+					event.getBot().sendMessage(event.getChannel(), "Cannot find player by the name of " + target);
 					return;
 				}
 
@@ -182,9 +176,9 @@ public class Bot extends PircBot {
 				return;
 			}
 
-			if(message.toLowerCase().startsWith(".clear")) {
-				if(!isVoiceOrOp(sender, channel)) {
-					sendMessage(Config.channel, "nope.avi");
+			if(event.getMessage().toLowerCase().startsWith(".clear")) {
+				if(!isVoiceOrOp(event.getUser(), event.getChannel())) {
+					event.getBot().sendMessage(event.getChannel(), "nope.avi");
 					return;
 				}
 
@@ -194,94 +188,62 @@ public class Bot extends PircBot {
 
 			if(Config.showGameMessage) {
 				String sendMessage = ChatColor.translateAlternateColorCodes('&', Config.gameMessage)
-				                     .replace("{nickname}", sender)
-				                     .replace("{message}", ColorConverter.ircToMinecraft(message));
+				                     .replace("{nickname}", event.getUser().getNick())
+				                     .replace("{message}", ColorConverter.ircToMinecraft(event.getMessage()));
 
 				plugin.getServer().broadcastMessage(sendMessage);
 			}
-//			plugin.getLogger().info("[IRC][" + Config.channel + "] <" + sender + "> " + message);
-		} else if(channel.equalsIgnoreCase(Config.modChannel)) {
+		} else if(event.getChannel().toString().equalsIgnoreCase(Config.modChannel)) {
 			// TODO: Mod Channel
 		}
 	}
 
-	@Override
-	protected void onPrivateMessage(String sender, String login, String hostname, String message) {
-		if(Farion.remoteSenders.containsKey(sender)) {
-			FarionRemoteConsoleCommandSender remote = Farion.remoteSenders.get(sender);
-			if(message.equalsIgnoreCase(".on")) {
-				sendMessage(sender, "Console output is now enabled");
+	protected void onPrivateMessage(PrivateMessageEvent event) throws Exception {
+		//(String sender, String login, String hostname, String message)
+		if(Farion.remoteSenders.containsKey(event.getUser().getNick())) {
+			FarionRemoteConsoleCommandSender remote = Farion.remoteSenders.get(event.getUser().getNick());
+			if(event.getMessage().equalsIgnoreCase(".on")) {
+				sendMessage(event.getUser().getNick(), "Console output is now enabled.");
 				remote.setRecieve(true);
 				return;
-			} else if(message.equalsIgnoreCase(".off")) {
-				sendMessage(sender, "Console output is now disabled");
+			} else if(event.getMessage().equalsIgnoreCase(".off")) {
+				sendMessage(event.getUser().getNick(), "Console output is now disabled.");
 				remote.setRecieve(false);
 				return;
 			}
 
 			if(remote.doesRecieve()) {
-				FarionRemoteServerCommandEvent event = new FarionRemoteServerCommandEvent(remote, message);
-				Bukkit.getServer().getPluginManager().callEvent(event);
-				Bukkit.getServer().dispatchCommand(remote, event.getCommand());
+				FarionRemoteServerCommandEvent farionEvent = new FarionRemoteServerCommandEvent(remote, event.getMessage());
+				Bukkit.getServer().getPluginManager().callEvent(farionEvent);
+				Bukkit.getServer().dispatchCommand(remote, farionEvent.getCommand());
 			} else {
-				sendMessage(sender, "Cannot send console commands while console output is disabled!");
+				sendMessage(event.getUser().getNick(), "Cannot send console commands while console output is disabled!");
 			}
 		}
 	}
 
-	@Override
-	protected void onAction(String sender, String login, String hostname, String target, String action) {
-		if(target.equalsIgnoreCase(Config.channel)) {
+	protected void onAction(ActionEvent event) throws Exception {
+		if(event.getChannel().getName().equalsIgnoreCase(Config.channel)) {
 			if(Config.showGameMeMessage) {
 				String sendMessage = ChatColor.translateAlternateColorCodes('&', Config.gameMeMessage)
-				                     .replace("{nickname}", sender)
-				                     .replace("{message}", action);
+				                     .replace("{nickname}", event.getUser().getNick())
+				                     .replace("{message}", event.getMessage());
 
 				plugin.getServer().broadcastMessage(sendMessage);
 			}
-//			plugin.getLogger().info("[IRC] * " + sender + " " + action);
-		} else if(target.equalsIgnoreCase(Config.modChannel)) {
+		} else if(event.getChannel().getName().equalsIgnoreCase(Config.modChannel)) {
 			// TODO: Mod channel
 		}
 	}
 
-	@Override
-	protected void onIncomingChatRequest(DccChat chat) {
-		try {
-			// TODO: Some Authentication Method here
-
-			chat.accept();
-			chat.sendLine("Enter password.");
-			String response = chat.readLine();
-
-			if(response.equals(Config.dccPassword)) {
-				chat.sendLine("Password Accepted");
-				plugin.getLogger().info("DCC Console session started.");
-
-				//Do some init function to start emulating console data
-
-				chat.close(); //Remove this when actually ready to use
-			} else {
-				plugin.getLogger().info("DCC Console session attempt, incorrect password.");
-				chat.sendLine("Incorrect.  Closing.");
-				chat.close();
-			}
+	private boolean isVoiceOrOp(User user, Channel channel) {
+		if (user.getChannelsOpIn().contains(channel) || user.getChannelsVoiceIn().contains(channel)) {
+			return true;
+		} else {
+			return false;
 		}
-		catch (IOException e) {}
 	}
-
-	private boolean isVoiceOrOp(String check, String channel) {
-		User[] users = getUsers(channel);
-		for(User user : users) {
-			if(user.isOp() || user.hasVoice()) {
-				if(user.getNick().equalsIgnoreCase(check)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
+		
 	protected void clearQueue() {
 		try {
 			// Reflection time!
