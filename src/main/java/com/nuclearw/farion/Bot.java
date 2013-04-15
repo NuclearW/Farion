@@ -9,9 +9,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.bukkit.entity.Player;
-//import org.jibble.pircbot.DccChat;
-//import org.jibble.pircbot.PircBot;
-//import org.jibble.pircbot.User;
 
 import org.pircbotx.Channel;
 import org.pircbotx.PircBotX;
@@ -28,7 +25,7 @@ public class Bot extends PircBotX {
 
 		this.setName(Config.nick);
 	}
- 
+
 	protected void onConnect(ConnectEvent event) throws Exception {
 		plugin.getLogger().info("Connected to IRC");
 		plugin.getLogger().info(Config.hostname + ", port " + Config.port);
@@ -78,12 +75,12 @@ public class Bot extends PircBotX {
 	}
 
 	protected void onNickChange(NickChangeEvent event) throws Exception {
-			String message = ChatColor.translateAlternateColorCodes('&', Config.gameNickChangeMessage)
-					       .replace("{oldnick}", event.getOldNick())
-					       .replace("{newnick}", event.getNewNick());
+		String message = ChatColor.translateAlternateColorCodes('&', Config.gameNickChangeMessage)
+		                 .replace("{oldnick}", event.getOldNick())
+		                 .replace("{newnick}", event.getNewNick());
 
-					plugin.getServer().broadcastMessage(message);
-					return;
+		plugin.getServer().broadcastMessage(message);
+		return;
 	}
 
 	protected void onMessage(MessageEvent event) throws Exception {
@@ -237,13 +234,13 @@ public class Bot extends PircBotX {
 	}
 
 	private boolean isVoiceOrOp(User user, Channel channel) {
-		if (user.getChannelsOpIn().contains(channel) || user.getChannelsVoiceIn().contains(channel)) {
+		if(user.getChannelsOpIn().contains(channel) || user.getChannelsVoiceIn().contains(channel)) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-		
+
 	protected void clearQueue() {
 		try {
 			// Reflection time!
