@@ -244,9 +244,9 @@ public class Bot extends PircBotX {
 	protected void clearQueue() {
 		try {
 			// Reflection time!
-			Field queueField = PircBot.class.getDeclaredField("_outQueue");
+			Field queueField = this.outputThread.getClass().getDeclaredField("queue");
 			queueField.setAccessible(true);
-			Object queueObject = queueField.get(Farion.bot);
+			Object queueObject = queueField.get(this.outputThread);
 			Method clearMethod = queueObject.getClass().getMethod("clear");
 			clearMethod.setAccessible(true);
 			clearMethod.invoke(queueObject);
