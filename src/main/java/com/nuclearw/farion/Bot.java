@@ -3,7 +3,6 @@ package com.nuclearw.farion;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -196,7 +195,6 @@ public class Bot extends PircBotX {
 	}
 
 	protected void onPrivateMessage(PrivateMessageEvent event) throws Exception {
-		//(String sender, String login, String hostname, String message)
 		if(Farion.remoteSenders.containsKey(event.getUser().getNick())) {
 			FarionRemoteConsoleCommandSender remote = Farion.remoteSenders.get(event.getUser().getNick());
 			if(event.getMessage().equalsIgnoreCase(".on")) {

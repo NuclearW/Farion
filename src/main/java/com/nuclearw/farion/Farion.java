@@ -19,7 +19,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import org.mcstats.Metrics;
 
-import org.pircbotx.TrustingSSLSocketFactory;
+import org.pircbotx.UtilSSLSocketFactory;
 import org.pircbotx.exception.IrcException;
 import org.pircbotx.exception.NickAlreadyInUseException;
 
@@ -109,9 +109,9 @@ public class Farion extends JavaPlugin implements Listener {
 		try {
 			if(Config.ssl) {
 				if(Config.password == null) {
-					bot.connect(Config.hostname, Config.port, new TrustingSSLSocketFactory());
+					bot.connect(Config.hostname, Config.port, new UtilSSLSocketFactory().disableDiffieHellman().trustAllCertificates());
 				} else {
-					bot.connect(Config.hostname, Config.port, Config.password, new TrustingSSLSocketFactory());
+					bot.connect(Config.hostname, Config.port, Config.password, new UtilSSLSocketFactory().disableDiffieHellman().trustAllCertificates());
 				}
 			} else {
 				if(Config.password == null) {
