@@ -6,7 +6,7 @@ import java.util.List;
 public class Config {
 	public static String nick, nickServPassword, channel, dccPassword, modChannel, hostname, password;
 	public static int port;
-	public static boolean ssl, retryConnect;
+	public static boolean ssl, retryConnect, debug;
 	public static List<String> remoteUsernames;
 
 	public static String ircMessage, ircMeMessage;
@@ -30,6 +30,7 @@ public class Config {
 		nickServPassword = plugin.getConfig().getString("Bot.NickServ");
 		retryConnect = plugin.getConfig().getBoolean("Bot.RetryConnect");
 		dccPassword = plugin.getConfig().getString("Bot.DCCPassword");
+		debug = plugin.getConfig().getBoolean("Bot.DebuggingMode");
 
 		hostname = plugin.getConfig().getString("Server.Hostname");
 		port = plugin.getConfig().getInt("Server.Port");

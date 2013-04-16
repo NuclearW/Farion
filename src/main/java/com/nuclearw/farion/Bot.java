@@ -22,7 +22,6 @@ public class Bot extends PircBotX {
 	public Bot(Farion instance) {
 		plugin = instance;
 
-		this.setName(Config.nick);
 	}
 
 	protected void onConnect(ConnectEvent event) throws Exception {

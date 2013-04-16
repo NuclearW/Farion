@@ -4,6 +4,8 @@ Bot:
     Nick: "Chatbot"
     NickServ: "woowoo"
     RetryConnect: true
+    # Do not enable debugging mode unless asked to do so.
+    DebuggingMode: false
 Server:
     Hostname: irc.esper.net
     Port: 6667

@@ -106,6 +106,11 @@ public class Farion extends JavaPlugin implements Listener {
 
 	//Connect to the IRC server
 	public static void connect() {
+
+		bot.setName(Config.nick);
+		bot.setLogin("Farion");
+		bot.setVerbose(Config.debug);
+
 		try {
 			if(Config.ssl) {
 				if(Config.password == null) {
