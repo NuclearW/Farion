@@ -44,6 +44,8 @@ public class Farion extends JavaPlugin implements Listener {
 			remoteSenders.put(name, new FarionRemoteConsoleCommandSender(name));
 		}
 
+		bot.getListenerManager().addListener(new BotEvents(this, bot));
+
 		connect();
 
 		getServer().getPluginManager().registerEvents(this, this);
