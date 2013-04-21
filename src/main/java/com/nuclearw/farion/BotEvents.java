@@ -59,7 +59,7 @@ public class BotEvents extends ListenerAdapter {
 		if(event.getChannel().getName().equalsIgnoreCase(Config.channel)) {
 			if(Config.showGameJoinMessage == true) {
 				String message = ChatColor.translateAlternateColorCodes('&', Config.gameJoinMessage)
-				                 .replace("{nickname}", event.getUser().toString());
+				                 .replace("{nickname}", event.getUser().getNick());
 
 				plugin.getServer().broadcastMessage(message);
 			}
@@ -70,7 +70,7 @@ public class BotEvents extends ListenerAdapter {
 		if(event.getChannel().getName().equalsIgnoreCase(Config.channel)) {
 			if(Config.showGamePartMessage == true) {
 				String message = ChatColor.translateAlternateColorCodes('&', Config.gamePartMessage)
-				                 .replace("{nickname}", event.getUser().toString());
+				                 .replace("{nickname}", event.getUser().getNick());
 
 				plugin.getServer().broadcastMessage(message);
 			}
