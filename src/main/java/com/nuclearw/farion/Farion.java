@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
@@ -62,7 +63,7 @@ public class Farion extends JavaPlugin implements Listener {
 
 	//Chat Handler
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-	public void onChat(AsyncPlayerChatEvent event) {
+	public void onChat(PlayerChatEvent event) {
 		if(event.getRecipients().size() != getServer().getOnlinePlayers().length) return;
 		if(!event.getPlayer().hasPermission("farion.relay")) return;
 

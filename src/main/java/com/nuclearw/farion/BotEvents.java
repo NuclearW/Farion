@@ -8,6 +8,7 @@ import org.pircbotx.Channel;
 import org.pircbotx.PircBotX;
 import org.pircbotx.User;
 import org.pircbotx.hooks.ListenerAdapter;
+import org.pircbotx.hooks.events.ActionEvent;
 import org.pircbotx.hooks.events.ConnectEvent;
 import org.pircbotx.hooks.events.DisconnectEvent;
 import org.pircbotx.hooks.events.JoinEvent;
@@ -55,7 +56,7 @@ public class BotEvents extends ListenerAdapter {
 	}
 
 	public void onJoin(JoinEvent event) throws Exception {
-		if(event.getChannel().toString().equalsIgnoreCase(Config.channel)) {
+		if(event.getChannel().getName().equalsIgnoreCase(Config.channel)) {
 			if(Config.showGameJoinMessage == true) {
 				String message = ChatColor.translateAlternateColorCodes('&', Config.gameJoinMessage)
 				                 .replace("{nickname}", event.getUser().toString());
@@ -66,7 +67,7 @@ public class BotEvents extends ListenerAdapter {
 	}
 
 	public void onPart(PartEvent event) throws Exception {
-		if(event.getChannel().toString().equalsIgnoreCase(Config.channel)) {
+		if(event.getChannel().getName().equalsIgnoreCase(Config.channel)) {
 			if(Config.showGamePartMessage == true) {
 				String message = ChatColor.translateAlternateColorCodes('&', Config.gamePartMessage)
 				                 .replace("{nickname}", event.getUser().toString());
@@ -85,11 +86,25 @@ public class BotEvents extends ListenerAdapter {
 		return;
 	}
 
+	public void onAction(ActionEvent event) {
+		if(event.getChannel().getName().equalsIgnoreCase(Config.channel)) {
+			if(Config.showGameMeMessage) {
+				String sendMessage = ChatColor.translateAlternateColorCodes('&', Config.gameMeMessage)
+				                     .replace("{nickname}", event.getUser().getNick())
+				                     .replace("{message}", event.getAction());
+
+				plugin.getServer().broadcastMessage(sendMessage);
+			}
+		} else if(event.getChannel().getName().equalsIgnoreCase(Config.modChannel)) {
+			// TODO: Mod channel
+		}
+	}
+
 	public void onMessage(MessageEvent event) throws Exception {
-		if(event.getChannel().toString().equalsIgnoreCase(Config.channel)) {
+		if(event.getChannel().getName().equalsIgnoreCase(Config.channel)) {
 			if(event.getMessage().equalsIgnoreCase(".players")) {
 				if(plugin.getServer().getOnlinePlayers().length == 0) {
-					event.getBot().sendMessage(event.getChannel(), "Nobody online here.");
+					event.respond("Nobody online here.");
 				} else {
 					String send = "Players online (" + plugin.getServer().getOnlinePlayers().length + "/" + plugin.getServer().getMaxPlayers() + "): ";
 					for(Player player : plugin.getServer().getOnlinePlayers()) {
@@ -192,7 +207,7 @@ public class BotEvents extends ListenerAdapter {
 
 				plugin.getServer().broadcastMessage(sendMessage);
 			}
-		} else if(event.getChannel().toString().equalsIgnoreCase(Config.modChannel)) {
+		} else if(event.getChannel().getName().equalsIgnoreCase(Config.modChannel)) {
 			// TODO: Mod Channel
 		}
 	}
