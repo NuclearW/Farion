@@ -17,16 +17,17 @@ import org.pircbotx.hooks.events.NickChangeEvent;
 import org.pircbotx.hooks.events.PartEvent;
 import org.pircbotx.hooks.events.PrivateMessageEvent;
 
+import com.gmail.nossr50.api.ChatAPI;
 import com.nuclearw.farion.runnable.RemovePlayerTask;
 
 public class BotEvents extends ListenerAdapter {
 
 	private PircBotX bot;
-	private Plugin plugin;
+	private Farion plugin;
 
 	public BotEvents(Plugin plugin, PircBotX bot) {
 
-		this.plugin = plugin;
+		this.plugin = (Farion) plugin;
 		this.bot = bot;
 	}
 
@@ -208,7 +209,9 @@ public class BotEvents extends ListenerAdapter {
 				plugin.getServer().broadcastMessage(sendMessage);
 			}
 		} else if(event.getChannel().getName().equalsIgnoreCase(Config.modChannel)) {
-			// TODO: Mod Channel
+			if(Config.showGameMessage && plugin.getmcMMOEnabled()) {
+				ChatAPI.sendAdminChat(plugin, event.getUser().getNick(), ColorConverter.ircToMinecraft(event.getMessage()));
+			}
 		}
 	}
 
