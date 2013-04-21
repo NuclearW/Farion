@@ -21,7 +21,6 @@ import com.gmail.nossr50.api.ChatAPI;
 import com.nuclearw.farion.runnable.RemovePlayerTask;
 
 public class BotEvents extends ListenerAdapter {
-
 	private PircBotX bot;
 	private Farion plugin;
 
