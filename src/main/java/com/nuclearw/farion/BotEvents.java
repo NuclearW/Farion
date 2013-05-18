@@ -20,6 +20,7 @@ import org.pircbotx.hooks.events.PrivateMessageEvent;
 import com.gmail.nossr50.api.ChatAPI;
 import com.nuclearw.farion.runnable.RemovePlayerTask;
 
+@SuppressWarnings("rawtypes")
 public class BotEvents extends ListenerAdapter {
 	private PircBotX bot;
 	private Farion plugin;

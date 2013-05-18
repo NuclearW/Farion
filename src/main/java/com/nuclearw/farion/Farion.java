@@ -10,7 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
@@ -38,9 +37,7 @@ public class Farion extends JavaPlugin implements Listener {
 
 		Config.load(this);
 		
-		bot = new Bot(this);
-
-		FarionRemoteConsoleCommandSender.setBot(bot);
+		bot = new Bot();
 
 		for(String name : Config.remoteUsernames) {
 			remoteSenders.put(name, new FarionRemoteConsoleCommandSender(name));
@@ -62,6 +59,8 @@ public class Farion extends JavaPlugin implements Listener {
 			getLogger().info("mcMMO NOT Found: mod Channel functions disabled.");
 		}
 
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, BotMessageQueue.getInstance(), 1, 1);
+
 		metrics();
 
 		getLogger().info("Finished Loading " + getDescription().getFullName());
@@ -74,7 +73,7 @@ public class Farion extends JavaPlugin implements Listener {
 
 	//Chat Handler
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-	public void onChat(PlayerChatEvent event) {
+	public void onChat(AsyncPlayerChatEvent event) {
 		if(event.getRecipients().size() != getServer().getOnlinePlayers().length) return;
 		if(!event.getPlayer().hasPermission("farion.relay")) return;
 
@@ -83,7 +82,7 @@ public class Farion extends JavaPlugin implements Listener {
 			                     .replace("{username}", event.getPlayer().getName())
 			                     .replace("{message}", ColorConverter.minecraftToIrc(event.getMessage()));
 
-			bot.sendMessage(Config.channel, sendMessage);
+			BotMessageQueue.getInstance().queueMessage(Config.channel, sendMessage);
 		}
 		// TODO: Mod Channel ?
 	}
@@ -107,14 +106,18 @@ public class Farion extends JavaPlugin implements Listener {
 				                     .replace("{username}", event.getPlayer().getName())
 				                     .replace("{message}", message);
 
-				bot.sendMessage(Config.channel, sendMessage);
+				BotMessageQueue.getInstance().queueMessage(Config.channel, sendMessage);
 			}
 			// TODO: Mod Channel ?
 		}
 	}
 
 	public static void reconnect() {
-		bot.disconnect();
+		try {
+			bot.disconnect();
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		}
 		connect();
 	}
 
@@ -163,7 +166,7 @@ public class Farion extends JavaPlugin implements Listener {
 		                 .replace("{username}", event.getPlayer().getName())
 		                 .replace("{displayname}", event.getPlayer().getDisplayName());
 
-		bot.sendMessage(Config.channel, message);
+		BotMessageQueue.getInstance().queueMessage(Config.channel, message);
 	}
 
 	//Quit Handler
@@ -175,7 +178,7 @@ public class Farion extends JavaPlugin implements Listener {
 		                 .replace("{username}", event.getPlayer().getName())
 		                 .replace("{displayname}", event.getPlayer().getDisplayName());
 
-		bot.sendMessage(Config.channel, message);
+		BotMessageQueue.getInstance().queueMessage(Config.channel, message);
 	}
 
 	//Kick Handler
@@ -186,9 +189,9 @@ public class Farion extends JavaPlugin implements Listener {
 		//Check if there's an actual kick reason passed, and if there is, include it in the output
 		strKickreason = event.getReason();
 		if(strKickreason != null) {
-			bot.sendMessage(Config.channel, event.getPlayer().getName() + " was kicked: [" + ColorConverter.minecraftToIrc(strKickreason) + "]");
+			BotMessageQueue.getInstance().queueMessage(Config.channel, event.getPlayer().getName() + " was kicked: [" + ColorConverter.minecraftToIrc(strKickreason) + "]");
 		} else {
-			bot.sendMessage(Config.channel, event.getPlayer().getName() + " was kicked.");
+			BotMessageQueue.getInstance().queueMessage(Config.channel, event.getPlayer().getName() + " was kicked.");
 		}
 	}
 
@@ -204,7 +207,7 @@ public class Farion extends JavaPlugin implements Listener {
 				message += " " + words[i];
 			}
 
-			bot.sendMessage(Config.channel, "<*Console*> " + message);
+			BotMessageQueue.getInstance().queueMessage(Config.channel, "<*Console*> " + message);
 			// TODO: Mod Channel ?
 		}
 	}
