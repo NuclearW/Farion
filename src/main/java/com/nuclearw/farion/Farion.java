@@ -26,7 +26,7 @@ import org.pircbotx.exception.NickAlreadyInUseException;
 public class Farion extends JavaPlugin implements Listener {
 	protected static Bot bot;
 	private FarionCommandExecutor farionExecutor;
-	private boolean mcMMOEnabled = false;
+	private static boolean mcMMOEnabled = false;
 	protected static Map<String, FarionRemoteConsoleCommandSender> remoteSenders = new HashMap<String, FarionRemoteConsoleCommandSender>();
 
 	@Override
@@ -54,7 +54,6 @@ public class Farion extends JavaPlugin implements Listener {
 			getServer().getPluginManager().registerEvents(new FarionMcMMO(bot, this), this);
 			getLogger().info("mcMMO Found, Registering Events");
 			bot.joinChannel(Config.modChannel);
-
 		} else {
 			getLogger().info("mcMMO NOT Found: mod Channel functions disabled.");
 		}
@@ -148,7 +147,9 @@ public class Farion extends JavaPlugin implements Listener {
 
 			bot.joinChannel(Config.channel);
 
-			// TODO: Mod Channel
+			if(mcMMOEnabled) {
+				bot.joinChannel(Config.modChannel);
+			}
 		} catch (NickAlreadyInUseException e) {
 			e.printStackTrace();
 		} catch (SSLException e) {
