@@ -4,8 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+
 import org.pircbotx.Channel;
-import org.pircbotx.PircBotX;
 import org.pircbotx.User;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.ActionEvent;
@@ -22,11 +22,12 @@ import com.nuclearw.farion.runnable.RemovePlayerTask;
 
 @SuppressWarnings("rawtypes")
 public class BotEvents extends ListenerAdapter {
-	private PircBotX bot;
+	private Bot bot;
 	private Farion plugin;
 
-	public BotEvents(Plugin plugin, PircBotX bot) {
+	public static boolean reconnecting = false;
 
+	public BotEvents(Plugin plugin, Bot bot) {
 		this.plugin = (Farion) plugin;
 		this.bot = bot;
 	}
@@ -40,13 +41,19 @@ public class BotEvents extends ListenerAdapter {
 		plugin.getLogger().info("Disconnected from IRC.");
 
 		//Set a delayed task to attempt a rejoin
-		if(Config.retryConnect = true) {
+		if(Config.retryConnect) {
+			if(reconnecting || bot.willfulDisconnect) {
+				return;
+			}
+
+			reconnecting = true;
 			plugin.getLogger().info("Retrying connect in 10 seconds...");
 
 			//Schedule the actual task
 			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 				public void run() {
 					Farion.reconnect();
+					BotEvents.reconnecting = false;
 				}
 			}, 200L);
 

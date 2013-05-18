@@ -114,11 +114,14 @@ public class Farion extends JavaPlugin implements Listener {
 
 	public static void reconnect() {
 		try {
+			bot.willfulDisconnect = true;
 			bot.disconnect();
+			while(bot.isConnected()) continue;
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
 		connect();
+		bot.willfulDisconnect = false;
 	}
 
 	//Connect to the IRC server

@@ -7,6 +7,8 @@ import java.lang.reflect.Method;
 import org.pircbotx.PircBotX;
 
 public class Bot extends PircBotX {
+	public boolean willfulDisconnect = false;
+
 	protected void clearQueue() {
 		try {
 			// Reflection time!
