@@ -23,7 +23,7 @@ public class FarionMcMMO implements Listener {
 			                     .replace("{username}", event.getSender())
 			                     .replace("{message}", ColorConverter.minecraftToIrc(event.getMessage()));
 
-			bot.sendMessage(Config.modChannel, sendMessage);
+			BotMessageQueue.getInstance().queueMessage(Config.modChannel, sendMessage);
 		}
 	}
 }
