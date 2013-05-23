@@ -60,7 +60,7 @@ public class FarionCommandExecutor implements CommandExecutor {
 			return true;
 		} else if(args[0].equalsIgnoreCase("list")) {
 			if(sender.hasPermission("farion.list")) {
-				String message = "Connected IRC users: ";
+				String message = ChatColor.GRAY + "Connected IRC users: ";
 				Bot bot = Farion.bot;
 
 				Channel channel = bot.getChannel(Config.channel);
@@ -88,7 +88,7 @@ public class FarionCommandExecutor implements CommandExecutor {
 							prefix = ChatColor.GOLD + "+";
 						}
 
-						message += prefix + ChatColor.GRAY + user.getNick() + ", ";
+						message += prefix + ChatColor.RESET + user.getNick() + ", ";
 					}
 
 					message = message.substring(0, message.length() - 2);
