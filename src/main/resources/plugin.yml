@@ -8,6 +8,7 @@ commands:
     farion:
         description: Farion root command
         usage: |
+            /<command> list
             /<command> reload
             /<command> remote
             /<command> reconnect
@@ -17,6 +18,7 @@ permissions:
         description: Gives access to all Farion commands
         children:
             farion.clear: true
+            farion.list: true
             farion.relay: true
             farion.reload: true
             farion.remoteusernames: true
@@ -24,8 +26,11 @@ permissions:
     farion.clear:
         description: Allows you to clear the bot's send queue
         default: op
+    farion.list:
+        description: Allows you to see the users in the connected IRC channel
+        default: true
     farion.relay:
-        description: Allows game chat to be relayed to IRC.
+        description: Allows game chat to be relayed to IRC
         default: true
     farion.reload:
         description: Allows you to reload the configuration

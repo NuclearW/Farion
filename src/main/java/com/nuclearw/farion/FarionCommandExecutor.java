@@ -2,9 +2,14 @@
 // Implementation.
 package com.nuclearw.farion;
 
+import java.util.Set;
+
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.pircbotx.Channel;
+import org.pircbotx.User;
 
 public class FarionCommandExecutor implements CommandExecutor {
 	private Farion plugin;
@@ -49,6 +54,46 @@ public class FarionCommandExecutor implements CommandExecutor {
 			if(sender.hasPermission("farion.reload")) {
 				Config.reload(plugin);
 				sender.sendMessage("Reloaded config");
+			} else {
+				sender.sendMessage("You do not have permission to do that.");
+			}
+			return true;
+		} else if(args[0].equalsIgnoreCase("list")) {
+			if(sender.hasPermission("farion.list")) {
+				String message = "Connected IRC users: ";
+				Bot bot = Farion.bot;
+
+				Channel channel = bot.getChannel(Config.channel);
+				Set<User> users = bot.getUsers(channel);
+				// Should be impossible to be empty, and we never show the name of ourselves in this list
+				if(users.isEmpty() || users.size() == 1) {
+					message += "Nobody home!";
+				} else {
+					for(User user : users) {
+						// Never list ourselves
+						if(user.getNick().equalsIgnoreCase(Config.nick)) {
+							continue;
+						}
+
+						String prefix = "";
+						if(user.getChannelsOwnerIn().contains(channel)) {
+							prefix = ChatColor.DARK_PURPLE + "~";
+						} else if(user.getChannelsSuperOpIn().contains(channel)) {
+							prefix = ChatColor.DARK_RED + "&";
+						} else if(user.getChannelsOpIn().contains(channel)) {
+							prefix = ChatColor.GREEN + "@";
+						} else if(user.getChannelsHalfOpIn().contains(channel)) {
+							prefix = ChatColor.AQUA + "%";
+						} else if(user.getChannelsVoiceIn().contains(channel)) {
+							prefix = ChatColor.GOLD + "+";
+						}
+
+						message += prefix + ChatColor.GRAY + user.getNick() + ", ";
+					}
+
+					message = message.substring(0, message.length() - 2);
+					sender.sendMessage(message);
+				}
 			} else {
 				sender.sendMessage("You do not have permission to do that.");
 			}
