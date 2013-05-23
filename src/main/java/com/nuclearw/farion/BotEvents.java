@@ -86,6 +86,18 @@ public class BotEvents extends ListenerAdapter {
 	}
 
 	public void onNickChange(NickChangeEvent event) throws Exception {
+		boolean isInChannel = false;
+		for(Channel channel : event.getUser().getChannels()) {
+			if(channel.getName().equalsIgnoreCase(Config.channel)) {
+				isInChannel = true;
+				break;
+			}
+		}
+
+		if(!isInChannel) {
+			return;
+		}
+
 		String message = ChatColor.translateAlternateColorCodes('&', Config.gameNickChangeMessage)
 		                 .replace("{oldnick}", event.getOldNick())
 		                 .replace("{newnick}", event.getNewNick());
