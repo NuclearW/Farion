@@ -145,6 +145,10 @@ public class Farion extends JavaPlugin implements Listener {
 				}
 			}
 
+			if(Config.nickServPassword != null && !Config.nickServPassword.isEmpty()) {
+				bot.identify(Config.nickServPassword);
+			}
+
 			bot.joinChannel(Config.channel);
 
 			if(mcMMOEnabled) {
